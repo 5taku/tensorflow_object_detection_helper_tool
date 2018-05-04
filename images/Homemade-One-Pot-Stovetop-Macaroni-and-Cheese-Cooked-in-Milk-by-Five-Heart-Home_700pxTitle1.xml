@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>Homemade-One-Pot-Stovetop-Macaroni-and-Cheese-Cooked-in-Milk-by-Five-Heart-Home_700pxTitle1.jpg</filename>
+	<path>/home/paperspace/Desktop/images/Homemade-One-Pot-Stovetop-Macaroni-and-Cheese-Cooked-in-Milk-by-Five-Heart-Home_700pxTitle1.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>700</width>
+		<height>1050</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>macncheese</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>116</xmin>
+			<ymin>241</ymin>
+			<xmax>700</xmax>
+			<ymax>737</ymax>
+		</bndbox>
+	</object>
+</annotation>

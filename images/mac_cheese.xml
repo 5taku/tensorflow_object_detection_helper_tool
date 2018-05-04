@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>mac_cheese.jpg</filename>
+	<path>/home/paperspace/Desktop/images/mac_cheese.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>519</width>
+		<height>519</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>macncheese</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>40</xmin>
+			<ymin>81</ymin>
+			<xmax>445</xmax>
+			<ymax>384</ymax>
+		</bndbox>
+	</object>
+</annotation>

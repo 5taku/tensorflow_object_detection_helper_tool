@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>50-BEST-Kids-Lunch-and-Snack-Ideas-19.jpg</filename>
+	<path>/home/paperspace/Desktop/images/50-BEST-Kids-Lunch-and-Snack-Ideas-19.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>705</width>
+		<height>944</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>macncheese</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>43</xmin>
+			<ymin>170</ymin>
+			<xmax>705</xmax>
+			<ymax>907</ymax>
+		</bndbox>
+	</object>
+</annotation>

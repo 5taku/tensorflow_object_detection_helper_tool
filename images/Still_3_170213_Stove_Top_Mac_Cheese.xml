@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>Still_3_170213_Stove_Top_Mac_Cheese.jpg</filename>
+	<path>/home/paperspace/Desktop/images/Still_3_170213_Stove_Top_Mac_Cheese.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>750</width>
+		<height>750</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>macncheese</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>28</xmin>
+			<ymin>215</ymin>
+			<xmax>664</xmax>
+			<ymax>559</ymax>
+		</bndbox>
+	</object>
+</annotation>

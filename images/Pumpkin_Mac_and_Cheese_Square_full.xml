@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>Pumpkin_Mac_and_Cheese_Square_full.jpg</filename>
+	<path>/home/paperspace/Desktop/images/Pumpkin_Mac_and_Cheese_Square_full.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>475</width>
+		<height>445</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>macncheese</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>107</xmin>
+			<ymin>107</ymin>
+			<xmax>411</xmax>
+			<ymax>264</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>macaroni-cheese-17959445.jpg</filename>
+	<path>/home/paperspace/Desktop/images/macaroni-cheese-17959445.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>300</width>
+		<height>450</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>macncheese</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1</xmin>
+			<ymin>58</ymin>
+			<xmax>258</xmax>
+			<ymax>249</ymax>
+		</bndbox>
+	</object>
+</annotation>

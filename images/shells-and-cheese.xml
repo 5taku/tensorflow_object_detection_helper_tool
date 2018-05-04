@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>shells-and-cheese.jpg</filename>
+	<path>/home/paperspace/Desktop/images/shells-and-cheese.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>900</width>
+		<height>600</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>macncheese</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>45</xmin>
+			<ymin>108</ymin>
+			<xmax>880</xmax>
+			<ymax>591</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>TP07_camping_recipe_macncheese_article.jpg</filename>
+	<path>/home/paperspace/Desktop/images/TP07_camping_recipe_macncheese_article.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>660</width>
+		<height>660</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>macncheese</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>27</xmin>
+			<ymin>190</ymin>
+			<xmax>461</xmax>
+			<ymax>588</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>3343412742_86e2ec0558.jpg</filename>
+	<path>/home/paperspace/Desktop/images/3343412742_86e2ec0558.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>426</width>
+		<height>426</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>macncheese</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>38</xmin>
+			<ymin>83</ymin>
+			<xmax>378</xmax>
+			<ymax>313</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,26 @@
+<annotation>
+	<folder>popcorn</folder>
+	<filename>14224733.jpg</filename>
+	<path>C:\Users\5taku\Desktop\popcorn\14224733.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>488</width>
+		<height>488</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>popcorn</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>85</xmin>
+			<ymin>3</ymin>
+			<xmax>418</xmax>
+			<ymax>457</ymax>
+		</bndbox>
+	</object>
+</annotation>

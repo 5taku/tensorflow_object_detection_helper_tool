@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>8665133_f520 2.jpg</filename>
+	<path>/home/paperspace/Desktop/images/8665133_f520 2.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>520</width>
+		<height>390</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>macncheese</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>68</xmin>
+			<ymin>47</ymin>
+			<xmax>379</xmax>
+			<ymax>331</ymax>
+		</bndbox>
+	</object>
+</annotation>

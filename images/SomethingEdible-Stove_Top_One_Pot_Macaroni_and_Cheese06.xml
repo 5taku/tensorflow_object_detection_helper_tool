@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>SomethingEdible-Stove_Top_One_Pot_Macaroni_and_Cheese06.jpg</filename>
+	<path>/home/paperspace/Desktop/images/SomethingEdible-Stove_Top_One_Pot_Macaroni_and_Cheese06.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>800</width>
+		<height>572</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>macncheese</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>141</xmin>
+			<ymin>94</ymin>
+			<xmax>587</xmax>
+			<ymax>454</ymax>
+		</bndbox>
+	</object>
+</annotation>

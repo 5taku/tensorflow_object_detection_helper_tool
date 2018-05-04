@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>Slow Cooker Macaroni and Cheese.jpg</filename>
+	<path>/home/paperspace/Desktop/images/Slow Cooker Macaroni and Cheese.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>426</width>
+		<height>640</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>macncheese</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>2</xmin>
+			<ymin>167</ymin>
+			<xmax>426</xmax>
+			<ymax>483</ymax>
+		</bndbox>
+	</object>
+</annotation>
