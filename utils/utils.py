@@ -1,5 +1,4 @@
 import os
-import six.moves.urllib as urllib
 import tarfile
 from tqdm import tqdm
 import requests
@@ -74,5 +73,3 @@ def change_exam_count(modelnum, examnum):
             print("Okay")
         if not line: break
     f.close()
-
-change_exam_count(1,1)
