@@ -29,12 +29,6 @@ def split(df, group):
     gb = df.groupby(group)
     return [data(filename, gb.get_group(x)) for filename, x in zip(gb.groups.keys(), gb.groups)]
 
-def class_text_to_int(row_label):
-    if row_label == 'raccoon':
-        return 1
-    else:
-        None
-
 def user_input():
     config = argparse.ArgumentParser()
     config.add_argument('-tr', '--train_record_output', help='Train record output file Location',default='./dataset/train.record',type=str, required=False)
@@ -42,8 +36,8 @@ def user_input():
     config.add_argument('-m', '--max_num_classes', help='Maximum class number', default='90', type=str,required=False)
     config.add_argument('-i','--input_folder',help='Input Images Forlder',default='./images/',type=str, required=False)
     config.add_argument('-l', '--label_file', help='Label file Location', default='./label_map.pbtxt', type=str,required=False)
-    config.add_argument('-tc', '--train_csv_output', help='Train csv output file Location', default='./train.csv', type=str,required=False)
-    config.add_argument('-vc', '--validate_csv_output', help='Validate csv output file Location', default='./validate.csv', type=str,required=False)
+    config.add_argument('-tc', '--train_csv_output', help='Train csv output file Location', default='./dataset/train.csv', type=str,required=False)
+    config.add_argument('-vc', '--validate_csv_output', help='Validate csv output file Location', default='./dataset/validate.csv', type=str,required=False)
     config.add_argument('-sr', '--split_rate', help='Dataset split rate ( 8 = train 80 | validate 20 )', default='8', type=str, required=False)
     args = config.parse_args()
     arguments = vars(args)
@@ -175,8 +169,10 @@ def main():
     global category_dict
     category_dict = make_category_dict(categories)
 
+    #make xml file to dataframe
     train_df, validate_df = xml_to_csv(record)
 
+    #make train record
     grouped = split(train_df, 'filename')
     writer = tf.python_io.TFRecordWriter(train_record_output)
     for group in grouped:
@@ -185,6 +181,7 @@ def main():
 
     writer.close()
 
+    #make validation record
     grouped = split(validate_df, 'filename')
     writer = tf.python_io.TFRecordWriter(validate_record_output)
     for group in grouped:
