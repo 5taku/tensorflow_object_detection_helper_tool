@@ -15,8 +15,23 @@ Key features include:
 
 Dataset collection using [labelimg](https://github.com/tzutalin/labelImg)
 
-It is recommended that both the original image and the xml file be placed in the image folder of the corresponding git. (You can also put it in your custom folder.)
+It is recommended that both the original image and the xml file be placed in the image folder of the corresponding git.
+(You can also put it in your custom folder.)
 
 ##### Usage - Using Command Line Interface
 
+    python tfgenerator.py [Arguments...]
+
+##### Arguments
+
+| Argument               | Short Hand | Default                   | Description                                       |
+|------------------------|------------|---------------------------|---------------------------------------------------|
+| train_record_output    | tr         | ./dataset/train.record    | Train record output file Location                 |
+| validate_record_output | vr         | ./dataset/validate.record | Validate record output file Location              |
+| max_num_classes        | m          | 90                        | Maximum class number                              |
+| input_folder           | i          | ./images/                 | Input Images Folder                               |
+| label_file             | l          | ./label_map.pbtxt         | Label file Location                               |
+| train_csv_output       | tc         | ./dataset/train.csv       | Train csv output file Location                    |
+| validate_csv_output    | vc         | ./dataset/validate.csv    | Validate csv output file Location                 |
+| split_rate             | sr         | 8                         | Dataset split rate ( 8 = train 80 | validate 20 ) |
 

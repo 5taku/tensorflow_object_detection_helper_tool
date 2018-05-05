@@ -34,7 +34,7 @@ def user_input():
     config.add_argument('-tr', '--train_record_output', help='Train record output file Location',default='./dataset/train.record',type=str, required=False)
     config.add_argument('-vr', '--validate_record_output', help='Validate record output file Location',default='./dataset/validate.record',type=str, required=False)
     config.add_argument('-m', '--max_num_classes', help='Maximum class number', default='90', type=str,required=False)
-    config.add_argument('-i','--input_folder',help='Input Images Forlder',default='./images/',type=str, required=False)
+    config.add_argument('-i','--input_folder',help='Input Images Folder',default='./images/',type=str, required=False)
     config.add_argument('-l', '--label_file', help='Label file Location', default='./label_map.pbtxt', type=str,required=False)
     config.add_argument('-tc', '--train_csv_output', help='Train csv output file Location', default='./dataset/train.csv', type=str,required=False)
     config.add_argument('-vc', '--validate_csv_output', help='Validate csv output file Location', default='./dataset/validate.csv', type=str,required=False)
