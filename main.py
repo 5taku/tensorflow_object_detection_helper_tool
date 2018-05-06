@@ -6,8 +6,7 @@ import argparse
 import shutil
 
 def set_log(log_level):
-    global logger
-    logger = logging.getLogger('5takulogger')
+
     fomatter = logging.Formatter('[%(levelname)s|%(filename)s:%(lineno)s] %(asctime)s > %(message)s')
 
     fileHandler = logging.FileHandler('./process.log')
@@ -69,8 +68,12 @@ def export_model(model, exam_num):
 
 
 def main():
+    global logger
+    logger = logging.getLogger('5takulogger')
 
     record = user_input()
+
+    reset = False
 
     for arguments in record:
          if arguments['log_level']:
@@ -87,16 +90,16 @@ def main():
     num_steps = int(input('Input number steps : '))
     print("")
 
-    logger.info('Program start [ model : ' + model_dict[model][0] + ', num steps : ' + num_steps)
+    logger.info('Program start [ model : ' + model_dict[model][0] + ', num steps : ' + str(num_steps) + ' ]')
 
     # Download model zoo file into the device
     if download_model(model):
         remove_model_tar_file(model)
 
     remake_config(model, num_steps, record)
-    transfer_learning(model,reset)
-    export_model(model, num_steps)
+    if transfer_learning(model, reset):
+        export_model(model, num_steps)
 
-    logger.info('Program end [ model : ' + model_dict[model][0] + ', num steps : ' + num_steps)
+    logger.info('Program end')
 
 main()

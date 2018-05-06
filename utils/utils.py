@@ -5,7 +5,6 @@ import sys
 from tqdm import tqdm
 import requests
 import math
-from object_detection.utils import label_map_util
 
 global model_dict
 model_dict= {1:['ssd_mobilenet_v1_coco_2017_11_17', 'ssd_mobilenet_v1_coco.config'],
@@ -58,7 +57,7 @@ def download_model(modelnum):
     DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
 
     if not os.path.isdir(MODEL_DIC_NAME):
-        print(MODEL_NAME + " Model not Exist. Download start.")
+        #logger.info(MODEL_NAME + " Model not Exist. Download start")
 
         # make taring_dir folder
         if not os.path.isdir('./train_dir/'+MODEL_NAME):
@@ -84,6 +83,7 @@ def download_model(modelnum):
             print("ERROR, something went wrong")
         tar_file = tarfile.open(FULL_FILE_PATH)
         tar_file.extractall(DIC_NAME)
+        #logger.info(MODEL_NAME + " Download end")
     return True
 
 def remove_model_tar_file(modelnum):
