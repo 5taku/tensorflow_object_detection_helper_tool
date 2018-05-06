@@ -31,8 +31,6 @@ def split(df, group):
 
 def user_input():
     config = argparse.ArgumentParser()
-    config.add_argument('-tr', '--train_record_output', help='Train record output file Location',default='./dataset/train.record',type=str, required=False)
-    config.add_argument('-vr', '--validate_record_output', help='Validate record output file Location',default='./dataset/validate.record',type=str, required=False)
     config.add_argument('-m', '--max_num_classes', help='Maximum class number', default='90', type=str,required=False)
     config.add_argument('-i','--input_folder',help='Input Images Forlder',default='./images/',type=str, required=False)
     config.add_argument('-l', '--label_file', help='Label file Location', default='./label_map.pbtxt', type=str,required=False)
@@ -154,10 +152,6 @@ def main():
     record = user_input()
 
     for arguments in record:
-        if arguments['train_record_output']:
-            train_record_output = arguments['train_record_output']
-        if arguments['validate_record_output']:
-            validate_record_output = arguments['validate_record_output']
         if arguments['input_folder']:
             input_folder = arguments['input_folder']
         if arguments['label_file']:
@@ -174,7 +168,7 @@ def main():
 
     #make train record
     grouped = split(train_df, 'filename')
-    writer = tf.python_io.TFRecordWriter(train_record_output)
+    writer = tf.python_io.TFRecordWriter('./dataset/train.record')
     for group in grouped:
         tf_example = create_tf_example(group, input_folder)
         writer.write(tf_example.SerializeToString())
@@ -183,11 +177,13 @@ def main():
 
     #make validation record
     grouped = split(validate_df, 'filename')
-    writer = tf.python_io.TFRecordWriter(validate_record_output)
+    writer = tf.python_io.TFRecordWriter('./dataset/validate.record')
     for group in grouped:
         tf_example = create_tf_example(group, input_folder)
         writer.write(tf_example.SerializeToString())
 
     writer.close()
+
+    print("tfrecord make end")
 
 main()
