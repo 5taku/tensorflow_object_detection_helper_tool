@@ -7,7 +7,7 @@ This is Helper Tool for Google Tensorflow Object Detection API.
 Key features include:
 > 1. Create tfrecord file
 >2. Re-training Automation
->3. Active Learning Assistant
+>3. Active Learning Assistant ( Not yet )
 
 #### 1. tfrecord Generator
 
@@ -26,8 +26,6 @@ It is recommended that both the original image and the xml file be placed in the
 
 | Argument               | Short Hand | Default                   | Description                                       |
 |------------------------|------------|---------------------------|---------------------------------------------------|
-| train_record_output    | tr         | ./dataset/train.record    | Train record output file Location                 |
-| validate_record_output | vr         | ./dataset/validate.record | Validate record output file Location              |
 | max_num_classes        | m          | 90                        | Maximum class number                              |
 | input_folder           | i          | ./images/                 | Input Images Folder                               |
 | label_file             | l          | ./label_map.pbtxt         | Label file Location                               |
