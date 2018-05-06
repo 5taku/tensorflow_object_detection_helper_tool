@@ -61,9 +61,14 @@ def download_model(modelnum):
         print(MODEL_NAME + " Model not Exist. Download start.")
 
         # make taring_dir folder
-        os.mkdir('./tarin_dir/'+MODEL_NAME)
+        if not os.path.isdir('./train_dir/'+MODEL_NAME):
+            os.mkdir('./train_dir/'+MODEL_NAME)
 
-        # Streaming, so we can iterate over the response.
+        # make taring_dir folder
+        if not os.path.isdir('./export_dir/' + MODEL_NAME):
+            os.mkdir('./export_dir/' + MODEL_NAME)
+
+        #  Streaming, so we can iterate over the response.
         r = requests.get(DOWNLOAD_BASE + MODEL_FILE, stream=True)
 
         # Total size in bytes.
@@ -78,10 +83,8 @@ def download_model(modelnum):
         if total_size != 0 and wrote != total_size:
             print("ERROR, something went wrong")
         tar_file = tarfile.open(FULL_FILE_PATH)
-        for file in tar_file.getmembers():
-            file_name = os.path.basename(file.name)
-            if 'frozen_inference_graph.pb' in file_name:
-                tar_file.extract(file, DIC_NAME )
+        tar_file.extractall(DIC_NAME)
+    return True
 
 def remove_model_tar_file(modelnum):
     MODEL_NAME = model_dict[modelnum][0]
@@ -94,7 +97,7 @@ def remove_model_tar_file(modelnum):
 
 def remake_config(model,exam_num,record):
     config_file = './model_conf/'+model_dict[model][1]
-    model_checkpoint_path = './tarin_dir/'+model_dict[model][0]+'/model.ckpt'
+    model_checkpoint_path = './model_zoo/'+model_dict[model][0]+'/model.ckpt'
     num_steps = 'num_steps: '
     num_classes = 'num_classes: '
     label_map_path = 'label_map_path: '
