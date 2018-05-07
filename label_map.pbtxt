@@ -7,3 +7,8 @@ item {
   id: 2
   name: 'popcorn'
 }
+
+item {
+  id: 5
+  name: 'pretzel'
+}

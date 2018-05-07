@@ -1,26 +1,10 @@
 import os
 import subprocess
-from utils.utils import download_model, remove_model_tar_file, model_input, model_dict, remake_config, check_time
+from utils.utils import download_model, remove_model_tar_file, model_input, model_dict, remake_config, check_time, set_log
 import logging
 import argparse
 import shutil
 import time
-
-def set_log(log_level):
-
-    fomatter = logging.Formatter('[%(levelname)s|%(filename)s:%(lineno)s] %(asctime)s > %(message)s')
-
-    fileHandler = logging.FileHandler('./process.log')
-    streamHandler = logging.StreamHandler()
-
-    fileHandler.setFormatter(fomatter)
-    streamHandler.setFormatter(fomatter)
-
-    logger.addHandler(fileHandler)
-    logger.addHandler(streamHandler)
-
-    level = logging.getLevelName(log_level)
-    logger.setLevel(level)
 
 def user_input():
     config = argparse.ArgumentParser()
@@ -71,11 +55,8 @@ def export_model(model, exam_num):
 
 
 def main():
-    global logger
-    logger = logging.getLogger('5takulogger')
 
     record = user_input()
-
     reset = False
 
     for arguments in record:
@@ -84,8 +65,11 @@ def main():
          if arguments['reset']:
              reset = arguments['reset']
 
-    #logger setting
-    set_log(log_level)
+    # logger setting
+    global logger
+    logger = set_log(log_level)
+
+
 
     model = model_input()
 
