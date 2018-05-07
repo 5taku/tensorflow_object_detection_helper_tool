@@ -14,7 +14,7 @@ import xml.etree.ElementTree as ET
 from collections import namedtuple
 from utils.utils import set_log, check_time
 
-max_num_classes = 90
+global max_num_classes
 
 def make_summary(rows):
     logger.info('{0:^50}'.format('TF Record Summary'))
@@ -56,8 +56,6 @@ def user_input():
 def xml_to_csv(record):
 
     for arguments in record:
-        if arguments['max_num_classes']:
-            max_num_classes = int(arguments['max_num_classes'])
         if arguments['split_rate']:
             split_rate = int(arguments['split_rate'])
         if arguments['input_folder']:
@@ -169,6 +167,8 @@ def main():
     record = user_input()
     start_time = time.time()
     for arguments in record:
+        if arguments['max_num_classes']:
+            max_num_classes = int(arguments['max_num_classes'])
         if arguments['input_folder']:
             input_folder = arguments['input_folder']
         if arguments['label_file']:
