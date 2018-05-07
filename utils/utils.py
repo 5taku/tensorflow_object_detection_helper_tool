@@ -125,3 +125,11 @@ def remake_config(model,exam_num,record):
             line = line.replace(line, fine_tune_checkpoint + '"' + model_checkpoint_path + '"' + '\n')
         sys.stdout.write(line)
 
+def check_time(time):
+    second = str(int(time % 60))
+    time /= 60
+    min = str(int(time % 60))
+    time /= 60
+    hour = str(int(time))
+
+    return hour,min,second

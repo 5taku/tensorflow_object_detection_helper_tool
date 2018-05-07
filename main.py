@@ -1,9 +1,10 @@
 import os
 import subprocess
-from utils.utils import download_model, remove_model_tar_file, model_input, model_dict, remake_config
+from utils.utils import download_model, remove_model_tar_file, model_input, model_dict, remake_config, check_time
 import logging
 import argparse
 import shutil
+import time
 
 def set_log(log_level):
 
@@ -35,6 +36,7 @@ def user_input():
 
 # re-training 수행
 def transfer_learning(model,reset):
+    start_time = time.time()
     logger.info('Transfer learning start')
 
     if reset:
@@ -43,10 +45,11 @@ def transfer_learning(model,reset):
 
     train_dir = './train_dir/' + model_dict[model][0]
     config_file = './model_conf/' + model_dict[model][1]
-    subprocess.call(['python', 'object_detection/train.py', ' --logtostderr', '', '--train_dir', train_dir,
+    subprocess.call(['python', 'object_detection/train.py', ' --logtostderr', '--train_dir', train_dir,
                      '--pipeline_config_path', config_file])
-    logger.info('Transfer learning end')
-
+    end_time = time.time()
+    h,m,s = check_time(int(end_time-start_time))
+    logger.info('Transfer learning end [ Total learning time : '+h+" Hour "+m+" Minute "+s+" Second")
 
 # export 수행
 def export_model(model, exam_num):
@@ -97,8 +100,8 @@ def main():
         remove_model_tar_file(model)
 
     remake_config(model, num_steps, record)
-    if transfer_learning(model, reset):
-        export_model(model, num_steps)
+    transfer_learning(model, reset)
+    export_model(model, num_steps)
 
     logger.info('Program end')
 
