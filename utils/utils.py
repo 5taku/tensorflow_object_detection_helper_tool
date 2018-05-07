@@ -5,6 +5,25 @@ import sys
 from tqdm import tqdm
 import requests
 import math
+import logging
+
+def set_log(log_level):
+    logger = logging.getLogger('5takulogger')
+    fomatter = logging.Formatter('[%(levelname)s|%(filename)s:%(lineno)s] %(asctime)s > %(message)s')
+
+    fileHandler = logging.FileHandler('./process.log')
+    streamHandler = logging.StreamHandler()
+
+    fileHandler.setFormatter(fomatter)
+    streamHandler.setFormatter(fomatter)
+
+    logger.addHandler(fileHandler)
+    logger.addHandler(streamHandler)
+
+    level = logging.getLevelName(log_level)
+    logger.setLevel(level)
+
+    return logger
 
 global model_dict
 model_dict= {1:['ssd_mobilenet_v1_coco_2017_11_17', 'ssd_mobilenet_v1_coco.config'],

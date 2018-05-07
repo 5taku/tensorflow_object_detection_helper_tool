@@ -1,5 +1,6 @@
 import os
 import io
+import time
 from PIL import Image
 import tensorflow as tf
 import argparse
@@ -10,9 +11,17 @@ from random import shuffle
 from object_detection.utils import label_map_util
 from object_detection.utils import dataset_util
 import xml.etree.ElementTree as ET
-from collections import namedtuple, OrderedDict
+from collections import namedtuple
+from utils.utils import set_log, check_time
 
 max_num_classes = 90
+
+def make_summary(rows):
+    logger.info('{0:^50}'.format('TF Record Summary'))
+    logger.info('{0:^10}'.format('ID') + '{0:^20}'.format('NAME') + '{0:^10}'.format('Train') + '{0:^10}'.format('Validate'))
+    for i in rows:
+        logger.info('{0:^10}'.format(i[0]) + '{0:^20}'.format(i[1]) + '{0:^10}'.format(i[2]) + '{0:^10}'.format(i[3]))
+
 
 def get_label_category(label_file):
     label_map = label_map_util.load_labelmap(label_file)
@@ -37,6 +46,7 @@ def user_input():
     config.add_argument('-tc', '--train_csv_output', help='Train csv output file Location', default='./dataset/train.csv', type=str,required=False)
     config.add_argument('-vc', '--validate_csv_output', help='Validate csv output file Location', default='./dataset/validate.csv', type=str,required=False)
     config.add_argument('-sr', '--split_rate', help='Dataset split rate ( 8 = train 80 | validate 20 )', default='8', type=str, required=False)
+    config.add_argument('-lv', '--log_level',help='Logger Level [DEBUG, INFO(Default), WARNING, ERROR, CRITICAL]', default='INFO', type=str,required=False)
     args = config.parse_args()
     arguments = vars(args)
     records = []
@@ -81,22 +91,29 @@ def xml_to_csv(record):
                      int(member[4][3].text)
                      )
             xml_list[labels.index(member[0].text)].append(value)
-    column_name = ['filename', 'width', 'height', 'class', 'xmin', 'ymin', 'xmax', 'ymax']
+
 
     for i in range(len(labels)):
         shuffle(xml_list[i])
 
     train = []
     validate = []
+    summaries = []
 
     for i in range(len(labels)):
         tmptrain, tmpvalidate = np.split(xml_list[i],[int((split_rate/10)*len(xml_list[i]))])
+
+        summary = (category_dict[xml_list[i][0][3]], xml_list[i][0][3],len(tmptrain),len(tmpvalidate))
+        summaries.append(summary)
+
         train.extend(tmptrain)
         validate.extend(tmpvalidate)
 
+    make_summary(summaries)
     shuffle(train)
     shuffle(validate)
 
+    column_name = ['filename', 'width', 'height', 'class', 'xmin', 'ymin', 'xmax', 'ymax']
     train_df = pd.DataFrame(train, columns=column_name)
     validate_df = pd.DataFrame(validate, columns=column_name)
 
@@ -150,13 +167,19 @@ def create_tf_example(group, path):
 def main():
 
     record = user_input()
-
+    start_time = time.time()
     for arguments in record:
         if arguments['input_folder']:
             input_folder = arguments['input_folder']
         if arguments['label_file']:
             label_file = arguments['label_file']
+        if arguments['log_level']:
+            log_level = arguments['log_level']
 
+    # logger setting
+    global logger
+    logger = set_log(log_level)
+    logger.info('TF Record Generator Start')
     global categories
     categories = get_label_category(label_file)
 
@@ -183,7 +206,8 @@ def main():
         writer.write(tf_example.SerializeToString())
 
     writer.close()
-
-    print("tfrecord make end")
+    end_time = time.time()
+    h, m, s = check_time(int(end_time - start_time))
+    logger.info('TF Record Generator End [ Total Generator time : '+h+' Hour '+m+' Minute '+s+' Second')
 
 main()
