@@ -80,8 +80,8 @@ def main():
     logger.info('Program start [ model : ' + model_dict[model][0] + ', num steps : ' + str(num_steps) + ' ]')
 
     # Download model zoo file into the device
-    if download_model(model):
-        remove_model_tar_file(model)
+    download_model(model)
+    remove_model_tar_file(model)
 
     remake_config(model, num_steps, record)
     transfer_learning(model, reset)

@@ -102,8 +102,8 @@ def download_model(modelnum):
             print("ERROR, something went wrong")
         tar_file = tarfile.open(FULL_FILE_PATH)
         tar_file.extractall(DIC_NAME)
+        tar_file.close()
         #logger.info(MODEL_NAME + " Download end")
-    return True
 
 def remove_model_tar_file(modelnum):
     MODEL_NAME = model_dict[modelnum][0]

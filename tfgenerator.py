@@ -99,7 +99,7 @@ def xml_to_csv(record):
     summaries = []
 
     for i in range(len(labels)):
-        tmptrain, tmpvalidate = np.split(xml_list[i],[int((split_rate/10)*len(xml_list[i]))])
+        tmptrain, tmpvalidate = np.split(xml_list[i],[int((split_rate/10.0)*len(xml_list[i]))])
 
         summary = (category_dict[xml_list[i][0][3]], xml_list[i][0][3],len(tmptrain),len(tmpvalidate))
         summaries.append(summary)
@@ -208,6 +208,6 @@ def main():
     writer.close()
     end_time = time.time()
     h, m, s = check_time(int(end_time - start_time))
-    logger.info('TF Record Generator End [ Total Generator time : '+h+' Hour '+m+' Minute '+s+' Second')
+    logger.info('TF Record Generator End [ Total Generator time : '+h+' Hour '+m+' Minute '+s+' Second ]')
 
 main()

@@ -81,3 +81,22 @@ Model name  | Speed (ms) | COCO mAP[^1] | Outputs |
 
 ##### Example
 
+
+
+
+##### Tutorial
+
+귀여운 판다, 라쿤, 수달, 포메라니안, 미어캣을 구분해보겠습니다.  
+각각의 이미지를 100장씩 준비하겠습니다.
+
+[Google image download](https://github.com/hardikvasa/google-images-download) 를 사용하여 이미지를 다운로드 합니다. ( 저작권을 조심하시길 바라겠습니다. )  
+
+     googleimagesdownload --keywords "panda" --size medium --output_directory ./panda  
+     
+위의 명령어대로 실행하면, 이미지를 폴더에 다운로드 하게 됩니다.
+적당하게 잘못된 이미지를 지우고 다른 이미지로 채워 넣습니다.
+
+raccoon , otter , pomeranian , meerkat 역시 동일하게 이미지를 준비합니다.
+
+ 
+ 
