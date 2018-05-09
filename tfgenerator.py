@@ -1,20 +1,21 @@
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
+
 import os
 import io
 import time
-from PIL import Image
-import tensorflow as tf
-import argparse
-import numpy as np
 import glob
+import argparse
 import pandas as pd
+import tensorflow as tf
+import xml.etree.ElementTree as ET
+from PIL import Image
 from random import shuffle
 from object_detection.utils import label_map_util
 from object_detection.utils import dataset_util
-import xml.etree.ElementTree as ET
 from collections import namedtuple
 from utils.utils import set_log, check_time
-
-global max_num_classes
 
 def make_summary(rows):
     logger.info('{0:^50}'.format('TF Record Summary'))
@@ -67,12 +68,14 @@ def xml_to_csv(record):
         if arguments['validate_csv_output']:
             validate_csv_output = arguments['validate_csv_output']
 
+    label_cnt = len(categories)
+
     labels = []
-    for i in range(len(categories)):
+    for i in range(label_cnt):
         labels.append(categories[i]['name'])
 
-    xml_list = [[]]
-    for i in range(len(labels)):
+    xml_list = []
+    for i in range(label_cnt):
         xml_list.append([])
 
     for xml_file in glob.glob(input_folder + '/*.xml'):
@@ -91,15 +94,17 @@ def xml_to_csv(record):
             xml_list[labels.index(member[0].text)].append(value)
 
 
-    for i in range(len(labels)):
+    for i in range(label_cnt):
         shuffle(xml_list[i])
 
     train = []
     validate = []
     summaries = []
 
-    for i in range(len(labels)):
-        tmptrain, tmpvalidate = np.split(xml_list[i],[int((split_rate/10.0)*len(xml_list[i]))])
+    for i in range(label_cnt):
+        rate = int(len(xml_list[i])/split_rate*1.0)
+        tmpvalidate = xml_list[i][:rate]
+        tmptrain = xml_list[i][rate:]
 
         summary = (category_dict[xml_list[i][0][3]], xml_list[i][0][3],len(tmptrain),len(tmpvalidate))
         summaries.append(summary)
@@ -118,7 +123,10 @@ def xml_to_csv(record):
     train_df.to_csv(train_csv_output, index=None)
     validate_df.to_csv(validate_csv_output, index=None)
 
-    return train_df, validate_df
+    train_csv = pd.read_csv(train_csv_output)
+    validate_csv = pd.read_csv(validate_csv_output)
+
+    return train_csv, validate_csv
 
 def create_tf_example(group, path):
 
@@ -166,6 +174,9 @@ def main():
 
     record = user_input()
     start_time = time.time()
+
+    global max_num_classes
+
     for arguments in record:
         if arguments['max_num_classes']:
             max_num_classes = int(arguments['max_num_classes'])
@@ -187,10 +198,10 @@ def main():
     category_dict = make_category_dict(categories)
 
     #make xml file to dataframe
-    train_df, validate_df = xml_to_csv(record)
+    train, validate = xml_to_csv(record)
 
     #make train record
-    grouped = split(train_df, 'filename')
+    grouped = split(train, 'filename')
     writer = tf.python_io.TFRecordWriter('./dataset/train.record')
     for group in grouped:
         tf_example = create_tf_example(group, input_folder)
@@ -199,7 +210,7 @@ def main():
     writer.close()
 
     #make validation record
-    grouped = split(validate_df, 'filename')
+    grouped = split(validate, 'filename')
     writer = tf.python_io.TFRecordWriter('./dataset/validate.record')
     for group in grouped:
         tf_example = create_tf_example(group, input_folder)

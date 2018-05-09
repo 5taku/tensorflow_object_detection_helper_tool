@@ -86,8 +86,10 @@ Model name  | Speed (ms) | COCO mAP[^1] | Outputs |
 
 ##### Tutorial
 
-귀여운 판다, 라쿤, 수달, 포메라니안, 미어캣을 구분해보겠습니다.  
-각각의 이미지를 100장씩 준비하겠습니다.
+###### STEP 1. 데이터 수집
+
+귀여운 판다, 라쿤, 수달, 포메라니안, 미어캣을 디텍팅해보겠습니다.  
+각각의 이미지를 100장씩 준비합니다.
 
 [Google image download](https://github.com/hardikvasa/google-images-download) 를 사용하여 이미지를 다운로드 합니다. ( 저작권을 조심하시길 바라겠습니다. )  
 
@@ -97,6 +99,25 @@ Model name  | Speed (ms) | COCO mAP[^1] | Outputs |
 적당하게 잘못된 이미지를 지우고 다른 이미지로 채워 넣습니다.
 
 raccoon , otter , pomeranian , meerkat 역시 동일하게 이미지를 준비합니다.
+
+오직 jpg 파일포맷의 이미지만 가능합니다.
+
+###### STEP 2. 데이터 라벨링
+
+[labelimg](https://github.com/tzutalin/labelImg) 를 사용하여 원본 이미지와 오브젝트 영역을 저장한 xml 을 하나의 폴더에 위치 시킵니다.
+
+하나의 이미지에 여러개의 라벨이 존재할 수 있습니다.
+Tip. 각각의 Object 에서 default label을 설정하면 라벨을 하나하나 입력할 필요가 없습니다.
+Tip. 단축키 W 는 영역지정 A 는 이전 이미지 D 는 다음 이미지 Ctrl + S 는 저장입니다.
+
+500장의 이미지를 라벨링하는데 50분 정도의 시간이 소요되었습니다.
+
+###### STEP 3. label_map.pbtxt 파일 수정
+
+레이블과 번호를 입력하여 줍니다.
+
+
+
 
  
  
