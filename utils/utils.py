@@ -37,7 +37,7 @@ model_dict= {1:['ssd_mobilenet_v1_coco_2017_11_17', 'ssd_mobilenet_v1_coco.confi
               9:['faster_rcnn_resnet101_lowproposals_coco_2018_01_28','faster_rcnn_resnet101_coco.config' ],
               10:['faster_rcnn_inception_resnet_v2_atrous_coco_2018_01_28','faster_rcnn_inception_resnet_v2_atrous_coco.config' ],
               11:['faster_rcnn_inception_resnet_v2_atrous_lowproposals_coco_2018_01_28','faster_rcnn_inception_resnet_v2_atrous_coco.config' ],
-              12:['faster_rcnn_nas_2018_01_28','faster_rcnn_nas_coco.config' ],
+              12:['faster_rcnn_nas_coco_2018_01_28','faster_rcnn_nas_coco.config' ],
               13:['faster_rcnn_nas_lowproposals_coco_2018_01_28','faster_rcnn_nas_coco.config']}
 
 def model_input():
@@ -46,7 +46,7 @@ def model_input():
     print("++++++        5TAKU          ++++++")
     print("+++++++++++++++++++++++++++++++++++")
     print("")
-    print("Step 1 Choose model ")
+    print("Select Model ")
     print("")
     print("1. ssd_mobilenet_v1_coco ")
     print("2. ssd_mobilenet_v2_coco ")
@@ -67,7 +67,7 @@ def model_input():
 
     return model
 
-def download_model(modelnum):
+def download_model(logger,modelnum):
     MODEL_NAME = model_dict[modelnum][0]
     DIC_NAME = './model_zoo/'
     MODEL_DIC_NAME = DIC_NAME + MODEL_NAME
@@ -76,7 +76,7 @@ def download_model(modelnum):
     DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
 
     if not os.path.isdir(MODEL_DIC_NAME):
-        #logger.info(MODEL_NAME + " Model not Exist. Download start")
+        logger.info(MODEL_NAME + " Model not Exist. Download start")
 
         # make taring_dir folder
         if not os.path.isdir('./train_dir/'+MODEL_NAME):
@@ -85,6 +85,10 @@ def download_model(modelnum):
         # make taring_dir folder
         if not os.path.isdir('./export_dir/' + MODEL_NAME):
             os.mkdir('./export_dir/' + MODEL_NAME)
+
+        # make taring_dir folder
+        if not os.path.isdir('./eval_dir/' + MODEL_NAME):
+                os.mkdir('./eval_dir/' + MODEL_NAME)
 
         #  Streaming, so we can iterate over the response.
         r = requests.get(DOWNLOAD_BASE + MODEL_FILE, stream=True)
@@ -99,11 +103,11 @@ def download_model(modelnum):
                 wrote = wrote + len(data)
                 f.write(data)
         if total_size != 0 and wrote != total_size:
-            print("ERROR, something went wrong")
+            logger.error("ERROR, something went wrong")
         tar_file = tarfile.open(FULL_FILE_PATH)
         tar_file.extractall(DIC_NAME)
         tar_file.close()
-        #logger.info(MODEL_NAME + " Download end")
+        logger.info(MODEL_NAME + " Download success")
 
 def remove_model_tar_file(modelnum):
     MODEL_NAME = model_dict[modelnum][0]
@@ -114,7 +118,7 @@ def remove_model_tar_file(modelnum):
     if os.path.exists(FULL_FILE_PATH):
         os.remove(FULL_FILE_PATH)
 
-def remake_config(model,exam_num,record):
+def remake_config(model,exam_num,args):
     config_file = './model_conf/'+model_dict[model][1]
     model_checkpoint_path = './model_zoo/'+model_dict[model][0]+'/model.ckpt'
     num_steps = 'num_steps: '
@@ -122,13 +126,8 @@ def remake_config(model,exam_num,record):
     label_map_path = 'label_map_path: '
     fine_tune_checkpoint = 'fine_tune_checkpoint: '
 
-    #get_class_num
-    #TODO : more smarter logic
-    for arguments in record:
-         if arguments['label_file']:
-            label_file = arguments['label_file']
     class_num = 0
-    for line in fileinput.input(label_file, inplace=1):
+    for line in fileinput.input(args['label_file'], inplace=1):
         if 'id: ' in line:
             class_num += 1
         sys.stdout.write(line)
@@ -139,7 +138,7 @@ def remake_config(model,exam_num,record):
         if num_classes in line:
             line = line.replace(line,'  '+num_classes + str(class_num) + '\n')
         if label_map_path in line:
-            line = line.replace(line, label_map_path + '"' + label_file + '"' + '\n')
+            line = line.replace(line, label_map_path + '"' + args['label_file'] + '"' + '\n')
         if fine_tune_checkpoint in line:
             line = line.replace(line, fine_tune_checkpoint + '"' + model_checkpoint_path + '"' + '\n')
         sys.stdout.write(line)

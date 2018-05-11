@@ -13,13 +13,12 @@ def user_input():
     config.add_argument('-r', '--reset', help='Training Resset configration [ Default = False ]', default=False, type=str,required=False)
     args = config.parse_args()
     arguments = vars(args)
-    records = []
-    records.append(arguments)
-    return records
+
+    return arguments
 
 
-# re-training 수행
-def transfer_learning(model,reset):
+# re-training func
+def transfer_learning(logger, model,reset):
     start_time = time.time()
     logger.info('Transfer learning start')
 
@@ -29,47 +28,42 @@ def transfer_learning(model,reset):
 
     train_dir = './train_dir/' + model_dict[model][0]
     config_file = './model_conf/' + model_dict[model][1]
-    subprocess.call(['python', 'object_detection/train.py', ' --logtostderr', '--train_dir', train_dir,
-                     '--pipeline_config_path', config_file])
+    try:
+        subprocess.check_output(['python', 'object_detection/train.py', ' --logtostderr', '--train_dir', train_dir,
+                     '--pipeline_config_path', config_file],stderr=subprocess.STDOUT)
+    except:
+        logger.error('Transfer leaarning Error')
+        exit()
     end_time = time.time()
     h,m,s = check_time(int(end_time-start_time))
-    logger.info('Transfer learning end [ Total learning time : '+h+" Hour "+m+" Minute "+s+" Second")
+    logger.info('Transfer learning Success [ Total learning time : '+h+" Hour "+m+" Minute "+s+" Second")
 
-# export 수행
-def export_model(model, exam_num):
+# export func
+def export_model(logger, model, exam_num):
     logger.info('Export model start')
     if os.path.isdir('./export_dir/' + model_dict[model][0]):
         shutil.rmtree('./export_dir/' + model_dict[model][0])
     export_dir = './export_dir/' + model_dict[model][0]
     config_file = './model_conf/' + model_dict[model][1]
     trained_checkpoint = './train_dir/' + model_dict[model][0] + '/model.ckpt-' + str(exam_num)
-    subprocess.call(['python', 'object_detection/export_inference_graph.py',
+    try:
+        subprocess.check_output(['python', 'object_detection/export_inference_graph.py',
                      '--input_type', 'image_tensor',
                      '--pipeline_config_path', config_file,
                      '--trained_checkpoint_prefix', trained_checkpoint,
                      '--output_directory', export_dir])
-    logger.info('Export model end')
-
-
-# 완료
-
+    except:
+        logger.error('Export Model Error')
+        exit()
+    logger.info('Export model Success')
 
 def main():
 
-    record = user_input()
+    args = user_input()
     reset = False
 
-    for arguments in record:
-         if arguments['log_level']:
-             log_level = arguments['log_level']
-         if arguments['reset']:
-             reset = arguments['reset']
-
     # logger setting
-    global logger
-    logger = set_log(log_level)
-
-
+    logger = set_log(args['log_level'])
 
     model = model_input()
 
@@ -80,12 +74,12 @@ def main():
     logger.info('Program start [ model : ' + model_dict[model][0] + ', num steps : ' + str(num_steps) + ' ]')
 
     # Download model zoo file into the device
-    download_model(model)
+    download_model(logger,model)
     remove_model_tar_file(model)
 
-    remake_config(model, num_steps, record)
-    transfer_learning(model, reset)
-    export_model(model, num_steps)
+    remake_config(model, num_steps, args)
+    transfer_learning(logger, model, reset)
+    export_model(logger, model, num_steps)
 
     logger.info('Program end')
 

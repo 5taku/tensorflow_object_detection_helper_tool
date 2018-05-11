@@ -17,16 +17,16 @@ from object_detection.utils import dataset_util
 from collections import namedtuple
 from utils.utils import set_log, check_time
 
-def make_summary(rows):
+def make_summary(logger,rows):
     logger.info('{0:^50}'.format('TF Record Summary'))
     logger.info('{0:^10}'.format('ID') + '{0:^20}'.format('NAME') + '{0:^10}'.format('Train') + '{0:^10}'.format('Validate'))
     for i in rows:
         logger.info('{0:^10}'.format(i[0]) + '{0:^20}'.format(i[1]) + '{0:^10}'.format(i[2]) + '{0:^10}'.format(i[3]))
 
 
-def get_label_category(label_file):
-    label_map = label_map_util.load_labelmap(label_file)
-    return label_map_util.convert_label_map_to_categories(label_map, max_num_classes=max_num_classes,use_display_name=True)
+def get_label_category(args):
+    label_map = label_map_util.load_labelmap(args['label_file'])
+    return label_map_util.convert_label_map_to_categories(label_map, max_num_classes=int(args['max_num_classes']),use_display_name=True)
 
 def make_category_dict(categories):
     category_dict = {}
@@ -41,32 +41,19 @@ def split(df, group):
 
 def user_input():
     config = argparse.ArgumentParser()
-    config.add_argument('-m', '--max_num_classes', help='Maximum class number', default='90', type=str,required=False)
+    config.add_argument('-m', '--max_num_classes', help='Maximum class number', default='90', type=int,required=False)
     config.add_argument('-i','--input_folder',help='Input Images Forlder',default='./images/',type=str, required=False)
     config.add_argument('-l', '--label_file', help='Label file Location', default='./label_map.pbtxt', type=str,required=False)
     config.add_argument('-tc', '--train_csv_output', help='Train csv output file Location', default='./dataset/train.csv', type=str,required=False)
     config.add_argument('-vc', '--validate_csv_output', help='Validate csv output file Location', default='./dataset/validate.csv', type=str,required=False)
-    config.add_argument('-sr', '--split_rate', help='Dataset split rate ( 8 = train 80 | validate 20 )', default='8', type=str, required=False)
+    config.add_argument('-sr', '--split_rate', help='Dataset split rate ( 8 = train 80 | validate 20 )', default='8', type=int, required=False)
     config.add_argument('-lv', '--log_level',help='Logger Level [DEBUG, INFO(Default), WARNING, ERROR, CRITICAL]', default='INFO', type=str,required=False)
     args = config.parse_args()
     arguments = vars(args)
-    records = []
-    records.append(arguments)
-    return records
 
-def xml_to_csv(record):
+    return arguments
 
-    for arguments in record:
-        if arguments['split_rate']:
-            split_rate = int(arguments['split_rate'])
-        if arguments['input_folder']:
-            input_folder = arguments['input_folder']
-        if arguments['label_file']:
-            label_file = arguments['label_file']
-        if arguments['train_csv_output']:
-            train_csv_output = arguments['train_csv_output']
-        if arguments['validate_csv_output']:
-            validate_csv_output = arguments['validate_csv_output']
+def xml_to_csv(logger,args):
 
     label_cnt = len(categories)
 
@@ -78,7 +65,7 @@ def xml_to_csv(record):
     for i in range(label_cnt):
         xml_list.append([])
 
-    for xml_file in glob.glob(input_folder + '/*.xml'):
+    for xml_file in glob.glob(args['input_folder'] + '/*.xml'):
         tree = ET.parse(xml_file)
         root = tree.getroot()
         for member in root.findall('object'):
@@ -102,7 +89,7 @@ def xml_to_csv(record):
     summaries = []
 
     for i in range(label_cnt):
-        rate = int(len(xml_list[i])/split_rate*1.0)
+        rate = int(len(xml_list[i])/float(args['split_rate']))
         tmpvalidate = xml_list[i][:rate]
         tmptrain = xml_list[i][rate:]
 
@@ -112,7 +99,7 @@ def xml_to_csv(record):
         train.extend(tmptrain)
         validate.extend(tmpvalidate)
 
-    make_summary(summaries)
+    make_summary(logger,summaries)
     shuffle(train)
     shuffle(validate)
 
@@ -120,11 +107,11 @@ def xml_to_csv(record):
     train_df = pd.DataFrame(train, columns=column_name)
     validate_df = pd.DataFrame(validate, columns=column_name)
 
-    train_df.to_csv(train_csv_output, index=None)
-    validate_df.to_csv(validate_csv_output, index=None)
+    train_df.to_csv(args['train_csv_output'], index=None)
+    validate_df.to_csv(args['validate_csv_output'], index=None)
 
-    train_csv = pd.read_csv(train_csv_output)
-    validate_csv = pd.read_csv(validate_csv_output)
+    train_csv = pd.read_csv(args['train_csv_output'])
+    validate_csv = pd.read_csv(args['validate_csv_output'])
 
     return train_csv, validate_csv
 
@@ -172,39 +159,26 @@ def create_tf_example(group, path):
 
 def main():
 
-    record = user_input()
+    args = user_input()
     start_time = time.time()
 
-    global max_num_classes
-
-    for arguments in record:
-        if arguments['max_num_classes']:
-            max_num_classes = int(arguments['max_num_classes'])
-        if arguments['input_folder']:
-            input_folder = arguments['input_folder']
-        if arguments['label_file']:
-            label_file = arguments['label_file']
-        if arguments['log_level']:
-            log_level = arguments['log_level']
-
     # logger setting
-    global logger
-    logger = set_log(log_level)
+    logger = set_log(args['log_level'])
     logger.info('TF Record Generator Start')
     global categories
-    categories = get_label_category(label_file)
+    categories = get_label_category(args)
 
     global category_dict
     category_dict = make_category_dict(categories)
 
     #make xml file to dataframe
-    train, validate = xml_to_csv(record)
+    train, validate = xml_to_csv(logger, args)
 
     #make train record
     grouped = split(train, 'filename')
     writer = tf.python_io.TFRecordWriter('./dataset/train.record')
     for group in grouped:
-        tf_example = create_tf_example(group, input_folder)
+        tf_example = create_tf_example(group, args['input_folder'])
         writer.write(tf_example.SerializeToString())
 
     writer.close()
@@ -213,7 +187,7 @@ def main():
     grouped = split(validate, 'filename')
     writer = tf.python_io.TFRecordWriter('./dataset/validate.record')
     for group in grouped:
-        tf_example = create_tf_example(group, input_folder)
+        tf_example = create_tf_example(group, args['input_folder'])
         writer.write(tf_example.SerializeToString())
 
     writer.close()
