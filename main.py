@@ -1,7 +1,6 @@
 import os
 import subprocess
 from utils.utils import download_model, remove_model_tar_file, model_input, model_dict, remake_config, check_time, set_log
-import logging
 import argparse
 import shutil
 import time
@@ -30,7 +29,7 @@ def transfer_learning(logger, model,reset):
     config_file = './model_conf/' + model_dict[model][1]
     try:
         subprocess.check_output(['python', 'object_detection/train.py', ' --logtostderr', '--train_dir', train_dir,
-                     '--pipeline_config_path', config_file],stderr=subprocess.STDOUT)
+                     '--pipeline_config_path', config_file])
     except:
         logger.error('Transfer leaarning Error')
         exit()
@@ -57,6 +56,25 @@ def export_model(logger, model, exam_num):
         exit()
     logger.info('Export model Success')
 
+# evaluate func
+def evaluate_model(logger, model, exam_num):
+    logger.info('Evaluate model start')
+    if os.path.isdir('./export_dir/' + model_dict[model][0]):
+        shutil.rmtree('./export_dir/' + model_dict[model][0])
+    export_dir = './export_dir/' + model_dict[model][0]
+    config_file = './model_conf/' + model_dict[model][1]
+    trained_checkpoint = './train_dir/' + model_dict[model][0] + '/model.ckpt-' + str(exam_num)
+    try:
+        subprocess.check_output(['python', 'object_detection/eval.py',
+                     '--logtostderr',
+                     '--pipeline_config_path', config_file,
+                     '--checkpoint_dir', './train_dir/' + model_dict[model][0] + '/model.ckpt-' + str(exam_num),
+                     '--eval_dir',  './train_dir/' + model_dict[model][0] ])
+    except:
+        logger.error('Evaluate Model Error')
+        exit()
+    logger.info('Evaluate model Success')
+
 def main():
 
     args = user_input()
@@ -80,7 +98,16 @@ def main():
     remake_config(model, num_steps, args)
     transfer_learning(logger, model, reset)
     export_model(logger, model, num_steps)
-
+    evaluate_model(logger,model,num_steps)
     logger.info('Program end')
 
 main()
+
+#TO-DO evaluate 함수 만들기
+#TO-DO example 어떤것인지 확인하고 argument 로 넣기
+#TO-DO README 수정하기
+#TO-DO visualization 함수 만들기
+#TO-DO 구글 compute engine 설정 및 테스트
+#TO-DO Active learning 준비하기
+#TO-D0 각 모델 다운로드 및 테스트 확인
+
