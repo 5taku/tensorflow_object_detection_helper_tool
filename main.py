@@ -98,16 +98,15 @@ def main():
     remake_config(model, num_steps, args)
     transfer_learning(logger, model, reset)
     export_model(logger, model, num_steps)
-    evaluate_model(logger,model,num_steps)
+    #evaluate_model(logger,model,num_steps)
     logger.info('Program end')
 
 main()
 
-#TO-DO evaluate 함수 만들기
-#TO-DO example 어떤것인지 확인하고 argument 로 넣기
-#TO-DO README 수정하기
-#TO-DO visualization 함수 만들기
-#TO-DO 구글 compute engine 설정 및 테스트
-#TO-DO Active learning 준비하기
-#TO-D0 각 모델 다운로드 및 테스트 확인
+#TO-DO makk evaluate func
+#TO-DO example check, add args
+#TO-DO README update
+#TO-DO visualization func add
+#TO-DO Active learning check
+#TO-D0 model download and test
 
