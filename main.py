@@ -10,6 +10,7 @@ def user_input():
     config.add_argument('-l', '--label_file', help='Label file Location', default='./label_map.pbtxt', type=str,required=False)
     config.add_argument('-log_level', '--log_level', help='Logger Level [DEBUG, INFO(Default), WARNING, ERROR, CRITICAL]', default='INFO', type=str, required=False)
     config.add_argument('-r', '--reset', help='Training Resset configration [ Default = False ]', default=False, type=str,required=False)
+    config.add_argument('-e', '--evaluate', help='Perform an evaluate every 1000 times.  [ Default = True ]', default=True, type=str, required=False)
     args = config.parse_args()
     arguments = vars(args)
 
@@ -57,8 +58,8 @@ def export_model(logger, model, exam_num):
     logger.info('Export model Success')
 
 # evaluate func
-def evaluate_model(logger, model, exam_num):
-    logger.info('Evaluate model start')
+def evaluate_model(logger, model, num_steps):
+    logger.info('Evaluate model start [ Step number : ' + str(num_steps) + " ]")
     if os.path.isdir('./export_dir/' + model_dict[model][0]):
         shutil.rmtree('./export_dir/' + model_dict[model][0])
     config_file = './model_conf/' + model_dict[model][1]
@@ -94,8 +95,21 @@ def main():
     download_model(logger,model)
     remove_model_tar_file(model)
 
-    remake_config(model, num_steps, args)
-    transfer_learning(logger, model, reset)
+    if args['evaluate']:
+        tmp_num = 1000
+        while tmp_num < num_steps:
+            remake_config(model, tmp_num, args)
+            transfer_learning(logger, model, reset)
+            evaluate_model(logger, model, tmp_num)
+            tmp_num += 1000
+        remake_config(model, num_steps, args)
+        transfer_learning(logger, model, reset)
+        evaluate_model(logger, model, num_steps)
+
+    else:
+        remake_config(model, num_steps, args)
+        transfer_learning(logger, model, reset)
+
     export_model(logger, model, num_steps)
     evaluate_model(logger,model,num_steps)
     logger.info('Program end')

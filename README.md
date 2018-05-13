@@ -102,47 +102,67 @@ Model name  | Speed (ms) | COCO mAP[^1] | Outputs |
 | log_level           | lv         | INFO                   | 로그 레벨을 지정합니다.<br>   로그 레벨의 종류는 다음과 같습니다.<br> [ DEBUG , INFO , WARNING , ERROR , CRITICAL ]<br><br>   현재는 INFO 레벨의 로그밖에 존재하지 않습니다.<br>  로그는 process.log 파일에서 확인할 수 있습니다.<br> 로그는 Re-training Automation 툴과 공유합니다. |
 | reset               | r          | False                  | 리셋 여부를 설정 합니다.<br>   기본적으로 learning 은 기존 러닝과 이어서 계속 진행이 됩니다.<br><br> step 이 10000 에서 종료가 되었다면, 20000으로 learning 을 다시 시작하면 10001 부터 시작합니다.<br>  새로운 데이터셋을 교육시키려면 reset 를 True로 설정하십시오. <br> |
 
-##### Example
+# Example  
 
+## Tutorial  
 
+### STEP 1. 데이터 수집  
 
-
-##### Tutorial
-
-###### STEP 1. 데이터 수집
-
-귀여운 판다, 라쿤, 수달, 포메라니안, 미어캣을 디텍팅해보겠습니다.  
+귀여운 판다, 라쿤, 수달, 포메라니안, 미어캣을 디텍팅해보겠습니다.    
 각각의 이미지를 100장씩 준비합니다.
 
 [Google image download](https://github.com/hardikvasa/google-images-download) 를 사용하여 이미지를 다운로드 합니다. ( 저작권을 조심하시길 바라겠습니다. )  
 
      googleimagesdownload --keywords "panda" --size medium --output_directory ./panda  
      
-위의 명령어대로 실행하면, 이미지를 폴더에 다운로드 하게 됩니다.
+위의 명령어대로 실행하면, 이미지를 폴더에 다운로드 하게 됩니다.  
 적당하게 잘못된 이미지를 지우고 다른 이미지로 채워 넣습니다.
 
 raccoon , otter , pomeranian , meerkat 역시 동일하게 이미지를 준비합니다.
 
 오직 jpg 파일포맷의 이미지만 가능합니다.
 
-![Google image Download](./doc/img/1.google_image_download.jpg)
+![Google image Download](./doc/img/1.google_image_download.jpg)  
+![Google image Download](./doc/img/2.google_image_download.jpg)  
 
-###### STEP 2. 데이터 라벨링
+### STEP 2. 데이터 라벨링
 
 [labelimg](https://github.com/tzutalin/labelImg) 를 사용하여 원본 이미지와 오브젝트 영역을 저장한 xml 을 하나의 폴더에 위치 시킵니다.
 
-하나의 이미지에 여러개의 라벨이 존재할 수 있습니다.
-Tip. 각각의 Object 에서 default label을 설정하면 라벨을 하나하나 입력할 필요가 없습니다.
-Tip. 단축키 W 는 영역지정 A 는 이전 이미지 D 는 다음 이미지 Ctrl + S 는 저장입니다.
+하나의 이미지에 여러개의 라벨이 존재할 수 있습니다.  
+Tip. 각각의 Object 에서 default label을 설정하면 라벨을 하나하나 입력할 필요가 없습니다.  
+Tip. 단축키 W 는 영역지정 A 는 이전 이미지 D 는 다음 이미지 Ctrl + S 는 저장입니다.  
 
-500장의 이미지를 라벨링하는데 50분 정도의 시간이 소요되었습니다.
+500장의 이미지를 라벨링하는데 50분 정도의 시간이 소요되었습니다.  
 
-###### STEP 3. label_map.pbtxt 파일 수정
+![Google image Download](./doc/img/3.labelimg.jpg)  
+
+### STEP 3. label_map.pbtxt 파일 수정
 
 레이블과 번호를 입력하여 줍니다.
 
+    item {
+      id: 1
+      name: 'meerkat'
+    }
+    item {
+      id: 2
+      name: 'otter'
+    }
+    item {
+      id: 3
+      name: 'panda'
+    }
+    item {
+      id: 4
+      name: 'raccoon'
+    }
+    item {
+      id: 5
+      name: 'pomeranian'
+    }
 
-
+### STEP 4. Transfer Learning
 
  
  
