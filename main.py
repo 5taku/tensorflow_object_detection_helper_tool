@@ -61,15 +61,14 @@ def evaluate_model(logger, model, exam_num):
     logger.info('Evaluate model start')
     if os.path.isdir('./export_dir/' + model_dict[model][0]):
         shutil.rmtree('./export_dir/' + model_dict[model][0])
-    export_dir = './export_dir/' + model_dict[model][0]
     config_file = './model_conf/' + model_dict[model][1]
-    trained_checkpoint = './train_dir/' + model_dict[model][0] + '/model.ckpt-' + str(exam_num)
     try:
         subprocess.check_output(['python', 'object_detection/eval.py',
                      '--logtostderr',
                      '--pipeline_config_path', config_file,
-                     '--checkpoint_dir', './train_dir/' + model_dict[model][0] + '/model.ckpt-' + str(exam_num),
-                     '--eval_dir',  './train_dir/' + model_dict[model][0] ])
+                     '--checkpoint_dir', './train_dir/' + model_dict[model][0],
+                     '--eval_dir',  './eval_dir/' + model_dict[model][0] ,
+                     '--run_once','True'])
     except:
         logger.error('Evaluate Model Error')
         exit()
@@ -98,12 +97,12 @@ def main():
     remake_config(model, num_steps, args)
     transfer_learning(logger, model, reset)
     export_model(logger, model, num_steps)
-    #evaluate_model(logger,model,num_steps)
+    evaluate_model(logger,model,num_steps)
     logger.info('Program end')
 
 main()
 
-#TO-DO makk evaluate func
+
 #TO-DO example check, add args
 #TO-DO README update
 #TO-DO visualization func add

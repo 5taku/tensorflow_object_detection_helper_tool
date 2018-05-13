@@ -13,6 +13,29 @@ This is Helper Tool for Google Tensorflow Object Detection API.
 
 파이썬 2.x , 3.x 호환됩니다.
 
+하지만 내부 subprocess 명령어는 'python' 명령어로 호출됩니다.
+
+따라서 python3 를 사용할 경우, alias 를 사용하셔야 합니다.
+
+1. ~/.bashrc 파일에 아래 내용을 입력합니다.
+
+    alias python=python3
+
+2. 커맨드 라인에서 다음 명령어를 실행합니다.
+
+    source ~/.bashrc
+    
+For example
+
+    $ python --version
+    Python 2.7.6
+    $ python3 --version
+    Python 3.4.3
+    $ alias python=python3
+    $ python --version
+    Python 3.4.3
+    
+
 ### 1. tfrecord Generator
 
 이미지 파일과 이미지 파일에 대응되는 영역위치 좌표가 지정된 xml을 가지고, tfrecord 파일을 생성합니다.  
@@ -101,6 +124,8 @@ Model name  | Speed (ms) | COCO mAP[^1] | Outputs |
 raccoon , otter , pomeranian , meerkat 역시 동일하게 이미지를 준비합니다.
 
 오직 jpg 파일포맷의 이미지만 가능합니다.
+
+![Google image Download](./doc/img/1.google_image_download.jpg)
 
 ###### STEP 2. 데이터 라벨링
 
