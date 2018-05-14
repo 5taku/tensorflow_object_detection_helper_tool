@@ -10,7 +10,8 @@ def user_input():
     config.add_argument('-l', '--label_file', help='Label file Location', default='./label_map.pbtxt', type=str,required=False)
     config.add_argument('-log_level', '--log_level', help='Logger Level [DEBUG, INFO(Default), WARNING, ERROR, CRITICAL]', default='INFO', type=str, required=False)
     config.add_argument('-r', '--reset', help='Training Resset configration [ Default = False ]', default=False, type=str,required=False)
-    config.add_argument('-e', '--evaluate', help='Perform an evaluate every 1000 times.  [ Default = True ]', default=True, type=str, required=False)
+    config.add_argument('-e', '--evaluate', help='Perform an evaluate every evaluate_number times.  [ Default = True ]', default=True, type=str, required=False)
+    config.add_argument('-n', '--evaluate_number', help='Perform an evaluate every evaluate_number times.  [ Default = 2000 ]', default='2000', type=str, required=False)
     args = config.parse_args()
     arguments = vars(args)
 
@@ -18,13 +19,14 @@ def user_input():
 
 
 # re-training func
-def transfer_learning(logger, model,reset):
+def transfer_learning(logger, model,args):
     start_time = time.time()
     logger.info('Transfer learning start')
 
-    if reset:
+    if args['reset']:
         shutil.rmtree('./train_dir/' + model_dict[model][0])
         os.mkdir('./train_dir/' + model_dict[model][0])
+        args['reset'] = False
 
     train_dir = './train_dir/' + model_dict[model][0]
     config_file = './model_conf/' + model_dict[model][1]
@@ -96,19 +98,19 @@ def main():
     remove_model_tar_file(model)
 
     if args['evaluate']:
-        tmp_num = 1000
+        tmp_num = int(args['evaluate_number'])
         while tmp_num < num_steps:
             remake_config(model, tmp_num, args)
-            transfer_learning(logger, model, reset)
+            transfer_learning(logger, model, args)
             evaluate_model(logger, model, tmp_num)
-            tmp_num += 1000
+            tmp_num += int(args['evaluate_number'])
         remake_config(model, num_steps, args)
-        transfer_learning(logger, model, reset)
+        transfer_learning(logger, model, args)
         evaluate_model(logger, model, num_steps)
 
     else:
         remake_config(model, num_steps, args)
-        transfer_learning(logger, model, reset)
+        transfer_learning(logger, model, args)
 
     export_model(logger, model, num_steps)
     evaluate_model(logger,model,num_steps)
@@ -116,9 +118,6 @@ def main():
 
 main()
 
-
-#TO-DO example check, add args
-#TO-DO README update
 #TO-DO visualization func add
 #TO-DO Active learning check
 #TO-D0 model download and test
