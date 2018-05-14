@@ -89,9 +89,9 @@ def xml_to_csv(logger,args):
     summaries = []
 
     for i in range(label_cnt):
-        rate = int(len(xml_list[i])/float(args['split_rate']))
-        tmpvalidate = xml_list[i][:rate]
-        tmptrain = xml_list[i][rate:]
+        rate = int( len(xml_list[i]) * (float(args['split_rate'])/10.0))
+        tmptrain = xml_list[i][:rate]
+        tmpvalidate = xml_list[i][rate:]
 
         summary = (category_dict[xml_list[i][0][3]], xml_list[i][0][3],len(tmptrain),len(tmpvalidate))
         summaries.append(summary)
