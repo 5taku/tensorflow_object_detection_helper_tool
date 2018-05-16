@@ -1,16 +1,5 @@
 # **Object Detection with Tensorflow Helper Tool**
 
-<!--
-## Table of Contents
-
-- [Summary](#Summary)
-- [Compatibility](#Compatibility)
-- [tfrecord Generator](#tfrecord Generator)
-- [Re-training Automation Tool](#Re-training Automation Tool)
-- [Tutorial](#Tutorial)
--->
-<!-- toc -->
-
 ## Summary
 
 [Tensorflow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection) 는 처음 접한 사용자는 사용하기 난해하여, 좀더 쉽게 Custom object detection을 수행할 수 있는 Tool을 만들었습니다.  
@@ -20,8 +9,6 @@ This is Helper Tool for Google Tensorflow Object Detection API.
 >1. Create tfrecord file
 >2. Re-training Automation
 >3. Active Learning Assistant ( Not yet )
-
-## Preperation
 
 ## Compatibility
 
@@ -48,6 +35,8 @@ For example
     $ alias python=python3
     $ python --version
     Python 3.4.3
+
+## Preperation
 
 ### Dependencies
 
