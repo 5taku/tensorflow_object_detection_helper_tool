@@ -209,7 +209,9 @@ Faster_Rcnn_Inception_v2_coco 모델을 가지고 50,000번 training 시켜보�
  
  ### STEP 6. Export model 확인
  
+ export_dir 폴더로 이동합니다.
  
+    ./export_dir/faster_rcnn_inception_v2_coco_2018_01_28 
  
  ### 번외1. evaluate 값 확인
  
@@ -223,7 +225,7 @@ Faster_Rcnn_Inception_v2_coco 모델을 가지고 50,000번 training 시켜보�
      
  각 이미지들을 확인합니다.
  
-  ![learning](./doc/img/8.evaluate.gif)      ![learning](./doc/img/8.evaluate2.gif)     
+  ![evaluate](./doc/img/8.evaluate.gif)      ![evaluate](./doc/img/8.evaluate2.gif)     
  
  ### 번외2. loss 값 확인
  
@@ -235,4 +237,4 @@ Faster_Rcnn_Inception_v2_coco 모델을 가지고 50,000번 training 시켜보�
  
      $tensorboard --logdir=./
     
-   ![learning](./doc/img/8.loss.jpg) 
+   ![loss](./doc/img/9.loss.jpg) 
