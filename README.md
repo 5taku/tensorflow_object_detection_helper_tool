@@ -1,6 +1,6 @@
 # **Object Detection with Tensorflow Helper Tool**
 
-### Summary
+## Summary
 
 This is Helper Tool for Google Tensorflow Object Detection API.
 
@@ -9,7 +9,7 @@ This is Helper Tool for Google Tensorflow Object Detection API.
 >2. Re-training Automation
 >3. Active Learning Assistant ( Not yet )
 
-### Compatibility
+## Compatibility
 
 파이썬 2.x , 3.x 호환됩니다.
 
@@ -36,23 +36,23 @@ For example
     Python 3.4.3
     
 
-### 1. tfrecord Generator
+## 1. tfrecord Generator
 
 이미지 파일과 이미지 파일에 대응되는 영역위치 좌표가 지정된 xml을 가지고, tfrecord 파일을 생성합니다.  
 정해진 비율대로 train.record , validate.record 가 생성됩니다. ( Random 모듈의 Shuffle 함수로 전부 Shuffling 됩니다. )
 
-##### 사전 준비 작업
+### 사전 준비 작업
 
 [Google image download](https://github.com/hardikvasa/google-images-download) 를 사용하여 필요한 이미지를 수집합니다.
 
 [labelimg](https://github.com/tzutalin/labelImg) 를 사용하여 원본 이미지와 오브젝트 영역을 저장한 xml 을 하나의 폴더에 위치 시킵니다.  
 ( 기본 폴더는 ./images 이지만, argument로 변경 가능합니다.)
 
-##### Usage - Using Command Line Interface
+### Usage - Using Command Line Interface
 
     python tfgenerator.py [Arguments...]
 
-##### Arguments
+### Arguments
 
 | Argument            | Short hand | Default                | Description                                                                                                                                                                                                                                                  |
 |---------------------|------------|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -64,17 +64,17 @@ For example
 | split_rate          | sr         | 8                      | 분할 비율을 설정합니다.<br>   기본값은 train 80% : validate 20% 입니다.<br>   6으로 설정할 경우, train 60% : validate 40% 입니다.<br> 2로 설정할 경우, train 20% : validate 80% 입니다.                                                                                  |
 | log_level           | lv         | INFO                   | 로그 레벨을 지정합니다.<br>   로그 레벨의 종류는 다음과 같습니다.<br> [ DEBUG , INFO , WARNING , ERROR , CRITICAL ]<br><br>   현재는 INFO 레벨의 로그밖에 존재하지 않습니다.<br>  로그는 process.log 파일에서 확인할 수 있습니다.<br> 로그는 Re-training Automation 툴과 공유합니다. |
 
-##### Example
+### Example
 
-### 2. Re-training Automation Tool
+## 2. Re-training Automation Tool
 
 원하는 Pre training 된 모델을 다운로드하고, 자동으로 Transfer learning , Export 를 진행합니다.  
 
-##### Usage - Using Command Line Interface
+### Usage - Using Command Line Interface
 
     python main.py [Arguments...]
 
-##### Model zoo
+### Model zoo
 
 *현재는 mask model 은 지원하지 않습니다.*  
 
@@ -94,7 +94,7 @@ Model name  | Speed (ms) | COCO mAP[^1] | Outputs |
 | faster_rcnn_nas | 1833 | 43 | Boxes |
 | faster_rcnn_nas_lowproposals_coco | 540 |  | Boxes |
  
- ##### Arguments
+ ### Arguments
 
 | Argument            | Short hand | Default                | Description                                                                                                                                                                                                                                                  |
 |---------------------|------------|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -104,10 +104,26 @@ Model name  | Speed (ms) | COCO mAP[^1] | Outputs |
 | evaluate            | e          | True                   | evaluate_number번마다 Evaluate를 할지 설정합니다<br> 기본값은 True 입니다. |
 | evaluate_number     | n          | 2000                   | 몇번마다 Evaluate 할지 결정합니다.<br> 기본값은 2000 입니다. |
 
-# Example  
+### Example  
 
 ## Tutorial  
 
+Pretrain 되어서 제공되는 Model들은 대부분 [coco dataset](http://cocodataset.org/) 을 기본 dataset으로 training 되었습니다.
+따라서 coco dataset instance 에 없는 데이터는 custom된 dataset 을 준비하여 transfer learning을 시켜야 합니다.
+
+다음의 예제는 custom object detection을 활용하는 예제입니다.
+
+예제는 google cloud comute engine 에서 테스트 되었으며 vm의 사양은 다음과 같습니다.
+
+    16 vCPU
+    60gb Ram
+    1 x NVIDIA Tesla P100
+    ubuntu 16.0.4
+    python3
+    tensorflow 1.8.0
+    cuda 9.0
+    cudnn 7.1
+    
 ### STEP 1. 데이터 수집  
 
 귀여운 판다, 라쿤, 수달, 포메라니안, 미어캣을 디텍팅해보겠습니다.    
@@ -129,7 +145,8 @@ raccoon , otter , pomeranian , meerkat 역시 동일하게 이미지를 준비�
 
 ### STEP 2. 데이터 라벨링
 
-[labelimg](https://github.com/tzutalin/labelImg) 를 사용하여 원본 이미지와 오브젝트 영역을 저장한 xml 을 하나의 폴더에 위치 시킵니다.
+[labelimg](https://github.com/tzutalin/labelImg) 를 사용하여 원본 이미지와 오브젝트 영역을 저장한 xml 을 하나의 폴더에 위치 시킵니다.  
+( 기본 폴더는 images 폴더입니다.)  
 
 하나의 이미지에 여러개의 라벨이 존재할 수 있습니다.  
 Tip. 각각의 Object 에서 default label을 설정하면 라벨을 하나하나 입력할 필요가 없습니다.  
@@ -196,5 +213,26 @@ Faster_Rcnn_Inception_v2_coco 모델을 가지고 50,000번 training 시켜보�
  
  ### 번외1. evaluate 값 확인
  
+ eval_dir 폴더로 이동합니다.
+ 
+     ./eval_dir/faster_rcnn_inception_v2_coco_2018_01_28 
+     
+ tensorboard를 실행합니다.
+ 
+     $tensorboard --logdir=./
+     
+ 각 이미지들을 확인합니다.
+ 
+  ![learning](./doc/img/8.evaluate.gif)      ![learning](./doc/img/8.evaluate2.gif)     
+ 
  ### 번외2. loss 값 확인
  
+ train_dir 폴더로 이동합니다.   
+ 
+     ./train_dir/faster_rcnn_inception_v2_coco_2018_01_28 
+ 
+  tensorboard를 실행합니다.
+ 
+     $tensorboard --logdir=./
+    
+   ![learning](./doc/img/8.loss.jpg) 

@@ -38,7 +38,7 @@ def transfer_learning(logger, model,args):
         exit()
     end_time = time.time()
     h,m,s = check_time(int(end_time-start_time))
-    logger.info('Transfer learning Success [ Total learning time : '+h+" Hour "+m+" Minute "+s+" Second")
+    logger.info('Transfer learning Success [ Total learning time : '+h+" Hour "+m+" Minute "+s+" Second ]")
 
 # export func
 def export_model(logger, model, exam_num):
@@ -80,7 +80,6 @@ def evaluate_model(logger, model, num_steps):
 def main():
 
     args = user_input()
-    reset = False
 
     # logger setting
     logger = set_log(args['log_level'])
@@ -91,6 +90,7 @@ def main():
     num_steps = int(input('Input number steps : '))
     print("")
 
+    total_start_time = time.time()
     logger.info('Program start [ model : ' + model_dict[model][0] + ', num steps : ' + str(num_steps) + ' ]')
 
     # Download model zoo file into the device
@@ -114,7 +114,9 @@ def main():
 
     export_model(logger, model, num_steps)
     evaluate_model(logger,model,num_steps)
-    logger.info('Program end')
+    total_end_time = time.time()
+    h, m, s = check_time(int(total_end_time - total_start_time))
+    logger.info('Program end [ Total time : '+h+" Hour "+m+" Minute "+s+" Second ]")
 
 main()
 
