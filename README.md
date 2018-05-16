@@ -1,5 +1,6 @@
 # **Object Detection with Tensorflow Helper Tool**
 
+<!--
 ## Table of Contents
 
 - [Summary](#Summary)
@@ -7,7 +8,7 @@
 - [tfrecord Generator](#tfrecord Generator)
 - [Re-training Automation Tool](#Re-training Automation Tool)
 - [Tutorial](#Tutorial)
-
+-->
 <!-- toc -->
 
 ## Summary
@@ -15,7 +16,7 @@
 This is Helper Tool for Google Tensorflow Object Detection API.
 
 주요 기능:
-> 1. Create tfrecord file
+>1. Create tfrecord file
 >2. Re-training Automation
 >3. Active Learning Assistant ( Not yet )
 
