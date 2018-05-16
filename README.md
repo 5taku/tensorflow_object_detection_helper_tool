@@ -13,12 +13,15 @@
 
 ## Summary
 
+[Tensorflow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection) 는 처음 접한 사용자는 사용하기 난해하여, 좀더 쉽게 Custom object detection을 수행할 수 있는 Tool을 만들었습니다.  
 This is Helper Tool for Google Tensorflow Object Detection API.
 
 주요 기능:
 >1. Create tfrecord file
 >2. Re-training Automation
 >3. Active Learning Assistant ( Not yet )
+
+## Preperation
 
 ## Compatibility
 
@@ -45,7 +48,34 @@ For example
     $ alias python=python3
     $ python --version
     Python 3.4.3
+
+### Dependencies
+
+>1. tensorflow를 설치합니다. ( object detection api의 경우 모델의 파라미터 값이 매우 크므로 gpu 버전을 추천합니다. ) 
+>2. [tensorflow object detection installation](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md)을 참조하여 object detection api를 설치합니다.
+
+    git clone https://github.com/tensorflow/models
+  
+  a. 해당 페이지의 dependencies 부분의 라이브러리들은 설치되어 있는것이 좋습니다.   
+  
+  b. Testing the Installation 부분까지 진행되어야 합니다.
     
+  c. 위의 부분을 진행하면 아래의 라이브러리가 설치되어 있을것입니다.  
+    
+    sudo apt-get install protobuf-compiler python-pil python-lxml python-tk  
+    sudo pip install Cython  
+    sudo pip install jupyter  
+    sudo pip install matplotlib  
+    sudo pip install Cython  
+    sudo pip install pillow  
+    sudo pip install lxml  
+    sudo pip install jupyter  
+    sudo pip install matplotlib    
+    
+>Tool 의 원활한 실행을 위하여 필요한 라이브러리는 다음과 같습니다.   
+ 
+    sudo pip install pandas  
+    sudo pip install tqdm
 
 ## tfrecord Generator
 

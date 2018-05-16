@@ -117,6 +117,7 @@ def main():
     total_end_time = time.time()
     h, m, s = check_time(int(total_end_time - total_start_time))
     logger.info('Program end [ Total time : '+h+" Hour "+m+" Minute "+s+" Second ]")
+    logger.info()
 
 main()
 
