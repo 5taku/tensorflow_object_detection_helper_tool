@@ -8,6 +8,8 @@
 - [Re-training Automation Tool](#Re-training Automation Tool)
 - [Tutorial](#Tutorial)
 
+<!-- toc -->
+
 ## Summary
 
 This is Helper Tool for Google Tensorflow Object Detection API.
