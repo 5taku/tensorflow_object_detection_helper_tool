@@ -1,5 +1,13 @@
 # **Object Detection with Tensorflow Helper Tool**
 
+## Table of Contents
+
+- [Summary](#Summary)
+- [Compatibility](#Compatibility)
+- [tfrecord Generator](#tfrecord Generator)
+- [Re-training Automation Tool](#Re-training Automation Tool)
+- [Tutorial](#Tutorial)
+
 ## Summary
 
 This is Helper Tool for Google Tensorflow Object Detection API.
@@ -36,7 +44,7 @@ For example
     Python 3.4.3
     
 
-## 1. tfrecord Generator
+## tfrecord Generator
 
 이미지 파일과 이미지 파일에 대응되는 영역위치 좌표가 지정된 xml을 가지고, tfrecord 파일을 생성합니다.  
 정해진 비율대로 train.record , validate.record 가 생성됩니다. ( Random 모듈의 Shuffle 함수로 전부 Shuffling 됩니다. )
@@ -66,7 +74,7 @@ For example
 
 ### Example
 
-## 2. Re-training Automation Tool
+## Re-training Automation Tool
 
 원하는 Pre training 된 모델을 다운로드하고, 자동으로 Transfer learning , Export 를 진행합니다.  
 
@@ -119,7 +127,7 @@ Pretrain 되어서 제공되는 Model들은 대부분 [coco dataset](http://coco
     60gb Ram
     1 x NVIDIA Tesla P100
     ubuntu 16.0.4
-    python3
+    python 2.7.12
     tensorflow 1.8.0
     cuda 9.0
     cudnn 7.1
