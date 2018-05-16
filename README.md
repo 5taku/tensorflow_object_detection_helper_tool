@@ -228,9 +228,9 @@ Faster_Rcnn_Inception_v2_coco 모델을 가지고 50,000번 training 시켜보�
  
  ### 번외0. 테스트 이미지 확인
  
- 테스트 이미지 폴더에 적절한 이미지들을 넣습니다.
- 기본 테스트 이미지 폴더는 아래와 같습니다.
- (image0.jpg 부터 시작하여 번호를 증가시킵니다.)
+ 테스트 이미지 폴더에 적절한 이미지들을 넣습니다.  
+ 기본 테스트 이미지 폴더는 아래와 같습니다.  
+ (image0.jpg 부터 시작하여 번호를 증가시킵니다.)  
  
      ./object_detection/test_images
  
@@ -240,7 +240,7 @@ Faster_Rcnn_Inception_v2_coco 모델을 가지고 50,000번 training 시켜보�
  
      ./object_detection/object_detection_tutorial.ipynb
      
- 결과값을 확인합니다.
+ 결과값을 확인합니다.  
  
   ![result](./doc/img/7.result1.jpg)   
   ![result](./doc/img/7.result2.jpg)   
@@ -248,8 +248,8 @@ Faster_Rcnn_Inception_v2_coco 모델을 가지고 50,000번 training 시켜보�
   ![result](./doc/img/7.result4.jpg)   
   ![result](./doc/img/7.result5.jpg)         
  
- 위의 결과를 보면, 정확한 결과값을 내지 못하는 경우도 있습니다.
- 이 경우, 모델의 변경, dataset 의 추가, training_step의 증가, hyperparameter 변경등을 통하여 정확도를 향상시킬 수 있습니다.
+ 위의 결과를 보면, 정확한 결과값을 내지 못하는 경우도 있습니다.  
+ 이 경우, 모델의 변경, dataset 의 추가, training_step의 증가, hyperparameter 변경등을 통하여 정확도를 향상시킬 수 있습니다.  
  
  ### 번외1. evaluate 값 확인
  
