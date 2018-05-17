@@ -62,8 +62,6 @@ def export_model(logger, model, exam_num):
 # evaluate func
 def evaluate_model(logger, model, num_steps):
     logger.info('Evaluate model start [ Step number : ' + str(num_steps) + " ]")
-    if os.path.isdir('./export_dir/' + model_dict[model][0]):
-        shutil.rmtree('./export_dir/' + model_dict[model][0])
     config_file = './model_conf/' + model_dict[model][1]
     try:
         subprocess.check_output(['python', 'object_detection/eval.py',
@@ -97,6 +95,10 @@ def main():
     download_model(logger,model)
     remove_model_tar_file(model)
 
+    if args['reset']:
+        if os.path.isdir('./eval_dir/' + model_dict[model][0]):
+            shutil.rmtree('./eval_dir/' + model_dict[model][0])
+
     if args['evaluate']:
         tmp_num = int(args['evaluate_number'])
         while tmp_num < num_steps:
@@ -107,17 +109,15 @@ def main():
         remake_config(model, num_steps, args)
         transfer_learning(logger, model, args)
         evaluate_model(logger, model, num_steps)
-
     else:
         remake_config(model, num_steps, args)
         transfer_learning(logger, model, args)
 
     export_model(logger, model, num_steps)
-    evaluate_model(logger,model,num_steps)
     total_end_time = time.time()
     h, m, s = check_time(int(total_end_time - total_start_time))
     logger.info('Program end [ Total time : '+h+" Hour "+m+" Minute "+s+" Second ]")
-    logger.info()
+    logger.info('')
 
 main()
 
