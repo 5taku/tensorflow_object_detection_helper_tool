@@ -294,3 +294,26 @@ Faster_Rcnn_Inception_v2_coco 모델을 가지고 50,000번 training 시켜보�
      $tensorboard --logdir=./
     
    ![loss](./doc/img/9.loss.jpg) 
+   
+  ### 번외3. Model별 training time 확인 
+  
+  모델별, 1000step, training -> evaluating -> exporting time 체크  
+  
+  | model                                                    | size | Training time |
+  |----------------------------------------------------------|------|---------------|
+  | ssd_mobilenet_v1_coco                                    | 86M  | 9m 44s        |
+  | ssd_mobilenet_v2_coco                                    | 201M |               |
+  | ssd_inception_v2_coco                                    | 295M | 8m 43s        |
+  | faster_rcnn_inception_v2_coco                            | 167M | 4m 43s        |
+  | faster_rcnn_resnet50_coco                                | 405M | 4m 28s        |
+  | faster_rcnn_resnet50_lowproposals_coco                   | 405M | 4m 30s        |
+  | rfcn_resnet101_coco                                      | 685M | 6m 19s        |
+  | faster_rcnn_resnet101_coco                               | 624M | 6m 13s        |
+  | faster_rcnn_resnet101_lowproposals_coco                  | 624M | 6m 13s        |
+  | faster_rcnn_inception_resnet_v2_atrous_coco              | 712M | 18m 6s        |
+  | faster_rcnn_inception_resnet_v2_atrous_lowproposals_coco | 712M |               |
+  | faster_rcnn_nas                                          | 1.2G |               |
+  | faster_rcnn_nas_lowproposals_coco                        | 1.2G |               |
+
+  
+  
