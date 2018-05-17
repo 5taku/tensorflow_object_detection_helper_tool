@@ -333,7 +333,7 @@ Faster_Rcnn_Inception_v2_coco 모델을 가지고 50,000번 training 시켜보�
 | faster_rcnn_resnet101_lowproposals_coco                  | 624M | 6m 13s        |
 | faster_rcnn_inception_resnet_v2_atrous_coco              | 712M | 18m 6s        |
 | faster_rcnn_inception_resnet_v2_atrous_lowproposals_coco | 712M |               |
-| faster_rcnn_nas                                          | 1.2G |               |
+| faster_rcnn_nas                                          | 1.2G | 47m 49s       |
 | faster_rcnn_nas_lowproposals_coco                        | 1.2G |               |
 
   
