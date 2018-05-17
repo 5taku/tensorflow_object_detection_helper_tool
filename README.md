@@ -55,11 +55,8 @@ For example
     sudo pip install Cython  
     sudo pip install jupyter  
     sudo pip install matplotlib  
-    sudo pip install Cython  
     sudo pip install pillow  
     sudo pip install lxml  
-    sudo pip install jupyter  
-    sudo pip install matplotlib    
     
 >Tool 의 원활한 실행을 위하여 필요한 라이브러리는 다음과 같습니다.   
  
@@ -201,6 +198,8 @@ train , validate 비율을 변경하려면, -sr 옵션을 사용하면 됩니다
     python tfgenerator.py -sr 5
     
 ![tfrecord](./doc/img/5.tfrecord2.jpg)      
+
+위의 원본 이미지, xml, csv, record 파일은 [여기](https://drive.google.com/drive/folders/1WwqFT6sbgoL6n7Bq-qbcvwkVHNSztKVS?usp=sharing)에서 다운받으실 수 있습니다.  
 
 ### STEP 4. label_map.pbtxt 파일 수정
 
