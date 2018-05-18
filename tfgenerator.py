@@ -44,6 +44,7 @@ def user_input():
     config.add_argument('-m', '--max_num_classes', help='Maximum class number', default='90', type=int,required=False)
     config.add_argument('-i','--input_folder',help='Input Images Forlder',default='./images/',type=str, required=False)
     config.add_argument('-l', '--label_file', help='Label file Location', default='./label_map.pbtxt', type=str,required=False)
+    config.add_argument('-c', '--custom_csv', help='Custom csv', default=False, type=str,required=False)
     config.add_argument('-tc', '--train_csv_output', help='Train csv output file Location', default='./dataset/train.csv', type=str,required=False)
     config.add_argument('-vc', '--validate_csv_output', help='Validate csv output file Location', default='./dataset/validate.csv', type=str,required=False)
     config.add_argument('-sr', '--split_rate', help='Dataset split rate ( 8 = train 80 | validate 20 )', default='8', type=int, required=False)
@@ -172,7 +173,11 @@ def main():
     category_dict = make_category_dict(categories)
 
     #make xml file to dataframe
-    train, validate = xml_to_csv(logger, args)
+    if not args['custom_csv']:
+        train, validate = xml_to_csv(logger, args)
+    else:
+        train = pd.read_csv(args['train_csv_output'])
+        validate = pd.read_csv(args['validate_csv_output'])
 
     #make train record
     grouped = split(train, 'filename')
