@@ -1,6 +1,15 @@
 # **Object Detection with Tensorflow Helper Tool**
 
-## Summary
+# Table of contents
+1. [Summary](#summary)
+2. [Compatibility](#compatibility)
+3. [Preperation](#preperation)
+4. [Tfrecord Generator](#tfgenerator)
+5. [Re-training Automation Tool](#retraining)
+6. [Tutorial](#tutorial)
+
+
+## Summary <a name="summary"></a>
 
 [Tensorflow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection) 는 처음 접한 사용자는 사용하기 난해하여, 좀더 쉽게 Custom object detection을 수행할 수 있는 Tool을 만들었습니다.  
 This is Helper Tool for Google Tensorflow Object Detection API.
@@ -10,7 +19,7 @@ This is Helper Tool for Google Tensorflow Object Detection API.
 >2. Re-training Automation
 >3. Active Learning Assistant ( Not yet )
 
-## Compatibility
+## Compatibility <a name="compatibility"></a>
 
 파이썬 2.x , 3.x 호환됩니다.
 
@@ -36,7 +45,7 @@ For example
     $ python --version
     Python 3.4.3
 
-## Preperation
+## Preperation <a name="preperation"></a>
 
 ### Dependencies
 
@@ -63,7 +72,7 @@ For example
     sudo pip install pandas  
     sudo pip install tqdm
 
-## tfrecord Generator
+## 1. tfrecord Generator <a name="tfgenerator"></a>
 
 이미지 파일과 이미지 파일에 대응되는 영역위치 좌표가 지정된 xml을 가지고, tfrecord 파일을 생성합니다.  
 정해진 비율대로 train.record , validate.record 가 생성됩니다. ( Random 모듈의 Shuffle 함수로 전부 Shuffling 됩니다. )
@@ -94,7 +103,7 @@ For example
 
 ### Example
 
-## Re-training Automation Tool
+## 2. Re-training Automation Tool<a name="retraining"></a>
 
 원하는 Pre training 된 모델을 다운로드하고, 자동으로 Transfer learning , Export 를 진행합니다.  
 
