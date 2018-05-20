@@ -22,8 +22,8 @@ However, the tensorflow object detection api is not easy to use for the first ti
 This tensorflow object detection helper tool uses the object detection api to create a tf record and automatically perform train, evaluate, and export.  
 You just need to collect images and prepare boundary box data!!!    
 The rest is handled automatically by the helper tool.  
-<br></br><br></br>
-tensorflow object detection api는 구글에서 제공하는 obejct detection 을 위한 api입니다.  
+<br></br>
+Tensorflow object detection api는 구글에서 제공하는 obejct detection 을 위한 api입니다.  
 하지만 tensorflow object detection api는 처음 접하는 사용자들이 바로 사용하기 쉽지 않습니다.  
 이 tensorflow object detection helper tool은 object detection api를 활용하여, tf record 를 생성하고, train, evaluate, export를 자동으로 수행하여 줍니다.  
 여러분은 단지 이미지를 수집하고, boundary box data를 준비하시기만 하면 됩니다.  
@@ -41,17 +41,19 @@ Main Function:
 
 ## Compatibility <a name="compatibility"></a>
 
+It is compatible with Python 2.x, 3.x.  
+However, the internal subprocess command is called with the 'python' command.  
+Therefore, if you use python3, you must use alias.  
+
 파이썬 2.x , 3.x 호환됩니다.
-
 하지만 내부 subprocess 명령어는 'python' 명령어로 호출됩니다.
-
 따라서 python3 를 사용할 경우, alias 를 사용하셔야 합니다.
 
-1. ~/.bashrc 파일에 아래 내용을 입력합니다.
+1. In the ~ / .bashrc file, type the following: (~/.bashrc 파일에 아래 내용을 입력합니다.)  
 
     alias python=python3
 
-2. 커맨드 라인에서 다음 명령어를 실행합니다.
+2. Run the following command from the command line: (커맨드 라인에서 다음 명령어를 실행합니다.)  
 
     source ~/.bashrc
     
@@ -69,15 +71,20 @@ For example
 
 ### Dependencies
 
+>1. Install tensorflow. (In case of object detection api, gpu version is recommended because parameter value of model is very large.)
+>2. Refer to [tensorflow object detection installation] (https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md) to install the object detection api.
+
 >1. tensorflow를 설치합니다. ( object detection api의 경우 모델의 파라미터 값이 매우 크므로 gpu 버전을 추천합니다. ) 
 >2. [tensorflow object detection installation](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/installation.md)을 참조하여 object detection api를 설치합니다.
 
     git clone https://github.com/tensorflow/models
   
+  a. The libraries in the dependencies section of the page should be installed.
+  b. Testing to the Installation section.
+  c. If you proceed with the above, you will have the following libraries installed.
+
   a. 해당 페이지의 dependencies 부분의 라이브러리들은 설치되어 있는것이 좋습니다.   
-  
   b. Testing the Installation 부분까지 진행되어야 합니다.
-    
   c. 위의 부분을 진행하면 아래의 라이브러리가 설치되어 있을것입니다.  
     
     sudo apt-get install protobuf-compiler python-pil python-lxml python-tk  
@@ -87,6 +94,8 @@ For example
     sudo pip install pillow  
     sudo pip install lxml  
     
+> The following libraries are required for smooth execution of the tool.
+    
 >Tool 의 원활한 실행을 위하여 필요한 라이브러리는 다음과 같습니다.   
  
     sudo pip install pandas  
@@ -94,10 +103,18 @@ For example
 
 ## 1. tfrecord Generator <a name="tfgenerator"></a>
 
+Creates a tfrecord file with xml with the area position coordinates corresponding to the image file and the image file.  
+Train.record, validate.record will be generated at a fixed ratio. (Shuffle all functions with Random module's Shuffle function.)  
+
 이미지 파일과 이미지 파일에 대응되는 영역위치 좌표가 지정된 xml을 가지고, tfrecord 파일을 생성합니다.  
 정해진 비율대로 train.record , validate.record 가 생성됩니다. ( Random 모듈의 Shuffle 함수로 전부 Shuffling 됩니다. )
 
 ### 사전 준비 작업
+
+Use [Google image download] (https://github.com/hardikvasa/google-images-download) to collect the required images.  
+
+Use [labelimg] (https://github.com/tzutalin/labelImg) to place the xml that saved the original image and object area in one folder.
+(The default folder is ./images, but can be changed to an argument.)  
 
 [Google image download](https://github.com/hardikvasa/google-images-download) 를 사용하여 필요한 이미지를 수집합니다.
 
@@ -133,7 +150,9 @@ For example
 
 ### Model zoo
 
-*현재는 mask model 은 지원하지 않습니다.*  
+* Currently, mask model is not supported.  
+
+* 현재 mask model 은 지원하지 않습니다. 
 
 Model name  | Speed (ms) | COCO mAP[^1] | Outputs |
 | ------------ | :--------------: | :--------------: | :-------------: |
