@@ -45,8 +45,8 @@ It is compatible with Python 2.x, 3.x.
 However, the internal subprocess command is called with the 'python' command.  
 Therefore, if you use python3, you must use alias.  
 
-파이썬 2.x , 3.x 호환됩니다.
-하지만 내부 subprocess 명령어는 'python' 명령어로 호출됩니다.
+파이썬 2.x , 3.x 호환됩니다.  
+하지만 내부 subprocess 명령어는 'python' 명령어로 호출됩니다.  
 따라서 python3 를 사용할 경우, alias 를 사용하셔야 합니다.
 
 1. In the ~ / .bashrc file, type the following: (~/.bashrc 파일에 아래 내용을 입력합니다.)  
@@ -79,12 +79,12 @@ For example
 
     git clone https://github.com/tensorflow/models
   
-  a. The libraries in the dependencies section of the page should be installed.
-  b. Testing to the Installation section.
-  c. If you proceed with the above, you will have the following libraries installed.
+  a. The libraries in the dependencies section of the page should be installed.  
+  b. Testing to the Installation section.  
+  c. If you proceed with the above, you will have the following libraries installed.  
 
   a. 해당 페이지의 dependencies 부분의 라이브러리들은 설치되어 있는것이 좋습니다.   
-  b. Testing the Installation 부분까지 진행되어야 합니다.
+  b. Testing the Installation 부분까지 진행되어야 합니다.  
   c. 위의 부분을 진행하면 아래의 라이브러리가 설치되어 있을것입니다.  
     
     sudo apt-get install protobuf-compiler python-pil python-lxml python-tk  
@@ -96,7 +96,7 @@ For example
     
 > The following libraries are required for smooth execution of the tool.
     
->Tool 의 원활한 실행을 위하여 필요한 라이브러리는 다음과 같습니다.   
+>Tool 의 원활한 실행을 위하여 필요한 라이브러리는 다음과 같습니다.
  
     sudo pip install pandas  
     sudo pip install tqdm
@@ -112,12 +112,10 @@ Train.record, validate.record will be generated at a fixed ratio. (Shuffle all f
 ### 사전 준비 작업
 
 Use [Google image download] (https://github.com/hardikvasa/google-images-download) to collect the required images.  
-
 Use [labelimg] (https://github.com/tzutalin/labelImg) to place the xml that saved the original image and object area in one folder.
 (The default folder is ./images, but can be changed to an argument.)  
 
 [Google image download](https://github.com/hardikvasa/google-images-download) 를 사용하여 필요한 이미지를 수집합니다.
-
 [labelimg](https://github.com/tzutalin/labelImg) 를 사용하여 원본 이미지와 오브젝트 영역을 저장한 xml 을 하나의 폴더에 위치 시킵니다.  
 ( 기본 폴더는 ./images 이지만, argument로 변경 가능합니다.)
 
@@ -142,7 +140,9 @@ Use [labelimg] (https://github.com/tzutalin/labelImg) to place the xml that save
 
 ## 2. Re-training Automation Tool<a name="retraining"></a>
 
-원하는 Pre training 된 모델을 다운로드하고, 자동으로 Transfer learning , Export 를 진행합니다.  
+Download the pre-trained model you want and automatically transfer learn, evaluate and export.  
+
+원하는 Pre training 된 모델을 다운로드하고, 자동으로 Transfer learning , Evaluate, Export 를 진행합니다.  
 
 ### Usage - Using Command Line Interface
 
@@ -186,14 +186,20 @@ Model name  | Speed (ms) | COCO mAP[^1] | Outputs |
 
 ### Custom Object Detection <a name="customobjectdetection"></a>
 
+Most pretested models are trained with the default dataset [coco dataset] (http://cocodataset.org/).  
+Therefore, data not in the coco dataset instance should be prepared for customized dataset and transfer learning.  
+This tutorial shows a series of steps to collect, label, and train data to get results.  
+
 Pretrain 되어서 제공되는 Model들은 대부분 [coco dataset](http://cocodataset.org/) 을 기본 dataset으로 training 되었습니다.
 따라서 coco dataset instance 에 없는 데이터는 custom된 dataset 을 준비하여 transfer learning을 시켜야 합니다.
-
-데이터를 수집하고, 라벨링하고, 트레이닝시켜 결과값을 얻는 튜토리얼입니다.
+해당 튜토리얼은 데이터를 수집하고, 라벨링하고, 트레이닝시켜 결과값을 얻는 일련의 과정을 보여줍니다.
 
 [Custom Object Detection](https://github.com/5taku/custom_object_detection)
 
 ### External Dataset Object Detection <a name="simpsonobjectdetection"></a>
+
+Collecting and processing the data is a very tedious task.  
+If you provide an image that is box bounded from the outside, you can make a model using it.  
 
 데이터를 수집하고 가공하는 일은 상당히 고된 작업입니다.  
 만약 외부에서 box boundary 되어 있는 이미지를 제공한다면 이를 활용하여 모델을 만들수 있습니다.  
@@ -201,6 +207,8 @@ Pretrain 되어서 제공되는 Model들은 대부분 [coco dataset](http://coco
 [Kaggle](https://www.kaggle.com/)은 양질의 데이터셋을 구할 수 있는 좋은 사이트입니다.
 
 ![kaggle_dataset_main](./doc/img/kaggle_dataset_main.jpg) 
+
+[Kaggle] (https://www.kaggle.com/) is a good place to get good datasets.  
 
 Kaggle 의 [The Simpsons Characters Data](https://www.kaggle.com/alexattia/the-simpsons-characters-dataset)를 활용하여 Object Detection 모델을 만드는 튜토리얼 입니다.
 
