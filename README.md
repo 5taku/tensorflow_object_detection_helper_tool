@@ -1,7 +1,8 @@
 # **Object Detection with Tensorflow Helper Tool**
 
 # Table of contents
-1. [Summary](#summary)
+
+1. [Intro](#intro)
 2. [Compatibility](#compatibility)
 3. [Preperation](#preperation)
 4. [Tfrecord Generator](#tfgenerator)
@@ -10,14 +11,32 @@
     1) [Custom Object Detection](#customobjectdetection)
     2) [External Dataset Object Detection](#simpsonobjectdetection)
 
-## Summary <a name="summary"></a>
+## Intro <a name="intro"></a>
 
-[Tensorflow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection) 는 처음 접한 사용자는 사용하기 난해하여, 좀더 쉽게 Custom object detection을 수행할 수 있는 Tool을 만들었습니다.  
-This is Helper Tool for Google Tensorflow Object Detection API.
+![object detection main](./doc/img/kites_detections_output.jpg) 
+
+![summary](./doc/img/summary.jpg) 
+
+Tensorflow object detection api is an api for obejct detection provided by Google.  
+However, the tensorflow object detection api is not easy to use for the first time users.  
+This tensorflow object detection helper tool uses the object detection api to create a tf record and automatically perform train, evaluate, and export.  
+You just need to collect images and prepare boundary box data!!!    
+The rest is handled automatically by the helper tool.  
+<br></br><br></br>
+tensorflow object detection api는 구글에서 제공하는 obejct detection 을 위한 api입니다.  
+하지만 tensorflow object detection api는 처음 접하는 사용자들이 바로 사용하기 쉽지 않습니다.  
+이 tensorflow object detection helper tool은 object detection api를 활용하여, tf record 를 생성하고, train, evaluate, export를 자동으로 수행하여 줍니다.  
+여러분은 단지 이미지를 수집하고, boundary box data를 준비하시기만 하면 됩니다.  
+나머지는 helper tool이 자동으로 처리하여 줍니다.  
+
+Main Function:
+>1. Create tfrecord file
+>2. Training Automation
+>3. Active Learning Assistant ( Not yet )
 
 주요 기능:
->1. Create tfrecord file
->2. Re-training Automation
+>1. tfrecord 파일 생성
+>2. Training 자동화
 >3. Active Learning Assistant ( Not yet )
 
 ## Compatibility <a name="compatibility"></a>
