@@ -22,11 +22,11 @@ However, the tensorflow object detection api is not easy to use for the first ti
 This tensorflow object detection helper tool uses the object detection api to create a tf record and automatically perform train, evaluate, and export.  
 You just need to collect images and prepare boundary box data!!!    
 The rest is handled automatically by the helper tool.  
-<br></br>
+
 Tensorflow object detection api는 구글에서 제공하는 obejct detection 을 위한 api입니다.  
 하지만 tensorflow object detection api는 처음 접하는 사용자들이 바로 사용하기 쉽지 않습니다.  
 이 tensorflow object detection helper tool은 object detection api를 활용하여, tf record 를 생성하고, train, evaluate, export를 자동으로 수행하여 줍니다.  
-여러분은 단지 이미지를 수집하고, boundary box data를 준비하시기만 하면 됩니다.  
+여러분은 단지 이미지를 수집하고, boundary box data를 준비하시기만 하면 됩니다!!!
 나머지는 helper tool이 자동으로 처리하여 줍니다.  
 
 Main Function:
@@ -185,6 +185,8 @@ Model name  | Speed (ms) | COCO mAP[^1] | Outputs |
 ## Tutorial  
 
 ### Custom Object Detection <a name="customobjectdetection"></a>
+
+![kaggle_dataset_main](./doc/img/custom_sample_after.jpg) 
 
 Most pretested models are trained with the default dataset [coco dataset] (http://cocodataset.org/).  
 Therefore, data not in the coco dataset instance should be prepared for customized dataset and transfer learning.  
